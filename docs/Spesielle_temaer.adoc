@@ -1,9 +1,0 @@
-= Noen spesielle temaer [[Spesielle_temaer]]
-
-include::Spesielt_om_juridisk_info.adoc[]
-
-include::Spesielt_om_distribusjon_datatjeneste.adoc[]
-
-include::Spesifikke_datakrav.adoc[]
-
-

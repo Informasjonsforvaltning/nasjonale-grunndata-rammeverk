@@ -1,5 +1,0 @@
-= Omfang og avgrensing [[Omfang-og-avgrensing]]
-
-Standarden inneholder kun spesifikasjon til hvordan DCAT-AP-NO brukes til å implementere minimumskrav til metadata for HVD spesifisert i den ovennevnte HVD-forordningen. Kravene ellers i DCAT-AP-NO gjelder også for HVD. Denne standarden skal derfor brukes sammen med, og ikke istedenfor, DCAT-AP-NO. 
-
-Standarden er ikke tenkt brukt for å beskrive fagsystem.

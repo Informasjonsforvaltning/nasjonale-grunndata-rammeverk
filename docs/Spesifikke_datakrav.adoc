@@ -1,9 +1,0 @@
-== Spesifikke krav til data i datasett med høy verdi [[Spesifikke_datakrav]]
-
-__Dette er en forkortet og fornorsket versjon av EUs https://semiceu.github.io/DCAT-AP/releases/2.2.0-hvd/#c7[Specific data requirements &#x29C9;, window="_blank", role="ext-link"] i DCAT-AP HVD.__
-
-Vedlegg til HVD-forordningen inneholder krav til hvilke dataelementer (__key attributes__) som skal være med i et datasett med høy verdi. Ethvert datasett med høy verdi skal være i henhold til kravene i HVD-forordningen. 
-
-For å dokumentere at kravene er oppfylt, anbefales det å bruke egenskapen `dct:conformsTo` til å referere til et allment tilgjengelig dokument (f.eks. en datastandard/dataspesifikasjon) som beskriver den indre strukturen av datasettet (eller distribusjonen). 
-
-En alternativ tilnærming er selvdeklarasjon (__self declaration of conformance__), der datasettutgiveren selv deklarerer at datasettet oppfyller alle de tekniske datakravene i HVD-forordningen. Hverken EUs DCAT-AP HVD eller den norske HVD-DCAT-AP-NO foreslår noen generelle selvdeklarasjonserklæringer.  
