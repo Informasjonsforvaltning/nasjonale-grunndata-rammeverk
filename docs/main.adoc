@@ -1,9 +1,12 @@
+include::locale/attributes.adoc[]
 = Rammeverk for Nasjonale grunndata
-Arbeidsgruppen for nasjonale grunndata
+Arbeidsgruppen for nasjonale grunndata +
+Digitaliseringsdirektoratet (Digdir) / The Norwegian Digitalisation Agency
 
-:revdate: august 2025
+:revdate: 15. oktober 2025
 :revnumber: 1.0
 :doctype: book
+:docinfo: shared
 :toc: left
 :toc-title: Innhold
 :toclevels: 4
@@ -11,12 +14,14 @@ Arbeidsgruppen for nasjonale grunndata
 :icons: font
 :source-highlighter: rouge
 :sectlinks:
+:table-stripes: even
 :title-logo-image: images/Digdir.png[pdfwidth=30vw]
 :title-logo-alt: Digitaliseringsdirektoratet
 // :title-logo-image: ...  ← vises i PDF, ikke i HTML-preview
+:xrefstyle: full
 
 image::images/Digdir.png[width=50%, pdfwidth=30vw, link=https://digdir.no/]
-
+include::download.adoc[]
 // ifndef::env-github[]
 // [.lead]
 // Dette dokumentet er satt sammen av flere filer via AsciiDoc-inkludering.
@@ -28,7 +33,7 @@ image::images/Digdir.png[width=50%, pdfwidth=30vw, link=https://digdir.no/]
 ====
 *Om dokumentet*  
 
-*Dato:* august 2025  
+*Dato:* 15. oktober 2025  
 *Versjon:* 1.0 +
 *Dokumenteier:* Arbeidsgruppen for nasjonale grunndata (Digdir) +
 *Hensikt:* Dette dokumentet skal beskrive rammeverk for Nasjonale grunndata, det vil si hvilke rutiner, prosesser, roller og aktører som må på plass for at Nasjonale grunndata skal forvaltes på en helhetlig måte på tvers av norsk offentlig sektor.
