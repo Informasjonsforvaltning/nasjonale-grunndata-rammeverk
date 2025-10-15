@@ -1,8 +1,0 @@
-= Innledning [[Innledning]]
-
-Formålet med standarden er å legge til rette for utveksling av beskrivelser av datasett med høy verdi (på engelsk __High Value Dataset__, forkortet til HVD). https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0138[HVD-forordningen (EU) 2023/138 &#x29C9;, window="_blank", role="ext-link"] som p.t. er under vurdering i EØS-EFTA, spesifiserer datasett av høy verdi innenfor følgende seks tematiske kategorier: (1) geodata, (2) jordobservasjon og miljø, (3) meteorologi, (4) statistikk, (5) selskaps- og eierskapsdata, og (6) mobilitet. Forordningen stiller bl.a. også et minimumskrav til metadata i beskrivelser av HVD. 
-
-Denne standarden supplerer https://data.norge.no/specification/dcat-ap-no["Standard for beskrivelse av datasett, datatjenester og datakataloger (DCAT-AP-NO) &#x29C9;", window="_blank", role="ext-link"], og beskriver hvordan DCAT-AP-NO brukes til å implementere minimumskrav til metadata for HVD spesifisert i ovennevnte forordningen. 
-
-Se ellers https://data.norge.no/specification/dcat-ap-no/#Innledning[formålet med DCAT-AP-NO  &#x29C9;, window="_blank", role="ext-link"] som også gjelder for denne standarden. 
-

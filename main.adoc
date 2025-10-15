@@ -1,76 +1,44 @@
-include::locale/attributes.adoc[]
-= Standard for beskrivelse av datasett med høy verdi (HVD-DCAT-AP-NO)
-Digitaliseringsdirektoratet (Digdir) / The Norwegian Digitalisation Agency
+= Rammeverk for Nasjonale grunndata
+Arbeidsgruppen for nasjonale grunndata
+
+:revdate: august 2025
+:revnumber: 1.0
 :doctype: book
-:docinfo: shared
-:icons: font
 :toc: left
-ifdef::backend-pdf[:toc: macro]
-:toc-title: Innholdsfortegnelse
+:toc-title: Innhold
 :toclevels: 4
-// :sectlinks:
-:sectanchors:
-:table-stripes: even
-:title-logo-image: image:images/Digdir.png[alt="Digdir-logo", pdfwidth=30vw]
-// :xrefstyle: short
-:xrefstyle: full
-
-image::images/Digdir.png[alt="Digdir-logo", width=30%, pdfwidth=30vw, link=https://digdir.no/]
-
-include::download.adoc[]
-
-NOTE: *Innmelding av feil og mangler:* +
-Dersom du finner feil eller mangler i dokumentet, ber vi om at dette meldes inn på https://github.com/Informasjonsforvaltning/hvd-dcat-ap-no/issues[Github Issues &#x29C9;, window="_blank", role="ext-link"]. Dersom du ikke allerede har bruker på Github kan du opprette bruker gratis.
-
-*Lisens*: https://creativecommons.org/licenses/by/4.0/[CC BY 4.0 &#x29C9;, window="_blank", role="ext-link"] +
-*Status*: Gjeldende fra 2025-01-01 +
-*Versjon*: v.1.0.1 (se <<Endringslogg>>) +
-*Publisert*: 2024-11-26 (v.1.0.0) + 
-*Oppdatert*: 2024-12-04 (v.1.0.x) +
-*Gjeldende versjon*: https://data.norge.no/specification/hvd-dcat-ap-no/ +
-*Forrige versjon*: ingen +
-*Redaktørens utkast*: https://informasjonsforvaltning.github.io/hvd-dcat-ap-no/ +
-// *Veileder*: https://data.norge.no/guide/veileder-beskrivelse-av-datasett/ +
-// *Valideringsverktøy*: https://data.norge.no/validator
-
-:leveloffset: +1
-
-// include::Om_denne_versjonen.adoc[]
-
-include::Abstract.adoc[]
-
-toc::[]
-
-// section number on
-:sectnums:
-:sectnumlevels: 5
-
-include::Om_denne_standarden.adoc[]
-
-include::Forenklet_fremstilling.adoc[]
-
-include::Spesifikasjon_per_klasse.adoc[]
-
-:leveloffset: +1
-
-include::Klasse_Datasett.adoc[]
-
-include::Klasse_Datasettserie.adoc[]
-
-include::Klasse_Datatjeneste.adoc[]
-
-include::Klasse_Distribusjon.adoc[]
-
-:leveloffset: -1
-
-include::Spesielle_temaer.adoc[]
-
-// Appendix, section number off
 :sectnums!:
+:icons: font
+:source-highlighter: rouge
+:sectlinks:
+:title-logo-image: images/Digdir.png[pdfwidth=30vw]
+:title-logo-alt: Digitaliseringsdirektoratet
+// :title-logo-image: ...  ← vises i PDF, ikke i HTML-preview
 
-include::Navnerom.adoc[]
+image::images/Digdir.png[width=50%, pdfwidth=30vw, link=https://digdir.no/]
 
-include::Endringslogg.adoc[]
+// ifndef::env-github[]
+// [.lead]
+// Dette dokumentet er satt sammen av flere filer via AsciiDoc-inkludering.
+// endif::[]
 
-// Analytics
-include::shared/analytics.adoc[]
+
+
+[NOTE]
+====
+*Om dokumentet*  
+
+*Dato:* august 2025  
+*Versjon:* 1.0 +
+*Dokumenteier:* Arbeidsgruppen for nasjonale grunndata (Digdir) +
+*Hensikt:* Dette dokumentet skal beskrive rammeverk for Nasjonale grunndata, det vil si hvilke rutiner, prosesser, roller og aktører som må på plass for at Nasjonale grunndata skal forvaltes på en helhetlig måte på tvers av norsk offentlig sektor.
+====
+
+
+include::innledning.adoc[]
+
+include::del1.adoc[]
+
+include::del2.adoc[]
+
+include::del3.adoc[]

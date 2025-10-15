@@ -1,7 +1,0 @@
-= Endringslogg [[Endringslogg]]
-
-== Endringer fra v.1.0.0 til 1.0.x [[Endringer-v1-0-x]]
-
-Kun redaksjonelle justeringer: 
-
-* fra v.1.0.0 til 1.0.1: lagt inn alternativ tekst til figurene

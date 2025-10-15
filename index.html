@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.23">
-<meta name="author" content="Digitaliseringsdirektoratet (Digdir) / The Norwegian Digitalisation Agency">
-<title>Standard for beskrivelse av datasett med høy verdi (HVD-DCAT-AP-NO)</title>
+<meta name="generator" content="Asciidoctor 2.0.24">
+<meta name="author" content="Arbeidsgruppen for nasjonale grunndata">
+<title>Rammeverk for Nasjonale grunndata</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -117,7 +117,6 @@ h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title str
 :not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
 pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
 pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
-pre>code{display:block}
 pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
 em em{font-style:normal}
 strong strong{font-weight:400}
@@ -220,6 +219,7 @@ table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
 .literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
 .literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
 .listingblock>.content{position:relative}
+.listingblock pre>code{display:block}
 .listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
 .listingblock:hover code[data-lang]::before{display:block}
 .listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
@@ -434,251 +434,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- this docinfo contains several modifications to the default asciidoc-CSS -->
-
-<!-- 1) Generate a collapsible TOC -->
-<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js"></script>
-<!-- We do not need the tocify CSS because the asciidoc CSS already provides most of what we need -->
-
-<style>
-.tocify-header {
-    font-style: italic;
-}
-
-.tocify-subheader {
-    font-style: normal;
-    font-size: 90%;
-}
-
-.tocify ul {
-    margin: 0;
- }
-</style>
-
-<script type="text/javascript">
-    $(function () {
-        // Add a new container for the tocify toc into the existing toc so we can re-use its
-        // styling
-        $("#toc").append("<div id='generated-toc'></div>");
-        $("#generated-toc").tocify({
-            extendPage: true,
-            context: "#content",
-            highlightOnScroll: true,
-            hideEffect: "slideUp",
-            // Use the IDs that asciidoc already provides so that TOC links and intra-document
-            // links are the same. Anything else might confuse users when they create bookmarks.
-            hashGenerator: function(text, element) {
-                return $(element).attr("id");
-            },
-            // Smooth scrolling doesn't work properly if we use the asciidoc IDs
-            smoothScroll: false,
-            // Set to 'none' to use the tocify classes
-            theme: "none",
-            // Handle book (may contain h1) and article (only h2 deeper)
-            selectors: $( "#content" ).has( "h1" ).size() > 0 ? "h1,h2,h3,h4,h5" : "h2,h3,h4,h5",
-            ignoreSelector: ".discrete"
-        });
-
-        // Make TOC items focusable
-        $("#generated-toc").find("a").attr("tabindex", "0");
-        // Make TOC items focusable
-        $("#generated-toc").find("a").attr("tabindex", "0");
-        // Collapse TOC initially, showing only level 1 headings
-        $("#generated-toc").find(".tocify-subheader").hide();
-        $("#generated-toc").find(".tocify-header").addClass("collapsed");
-        // Toggle collapse on click
-        $("#generated-toc").on("click", ".tocify-header", function() {
-          $(this).nextUntil(".tocify-header").toggle();
-          $(this).toggleClass("collapsed");
-        });
-
-/*
-        // Make TOC items focusable
-        toc.find("a").attr("tabindex", "0");
-
-        // Collapse TOC initially, showing only level 1 headings
-        toc.find(".tocify-subheader").hide();
-        toc.find(".tocify-header").addClass("collapsed");
-
-        // Toggle collapse on click
-        toc.on("click", ".tocify-header", function() {
-          $(this).nextUntil(".tocify-header").toggle();
-          $(this).toggleClass("collapsed");
-        });
-*/
-        // Switch between static asciidoc toc and dynamic tocify toc based on browser size
-        // This is set to match the media selectors in the asciidoc CSS
-        // Without this, we keep the dynamic toc even if it is moved from the side to preamble
-        // position which will cause odd scrolling behavior
-        var handleTocOnResize = function() {
-            if ($(document).width() < 768) {
-                $("#generated-toc").hide();
-                $(".sectlevel0").show();
-                $(".sectlevel1").show();
-            }
-            else {
-                $("#generated-toc").show();
-                $(".sectlevel0").hide();
-                $(".sectlevel1").hide();
-            }
-        }
-
-        $(window).resize(handleTocOnResize);
-        handleTocOnResize();
-    });
-</script>
-
-
-<!-- 2) To make collapsible blocks outlined when focused -->
-
-<style>
-    /* Add outline to the summary element when focused */
-    details summary:focus {
-        outline: thin dotted; /* Adjust thickness and color as needed */
-        outline-offset: -2px; /* Adjust the offset to fit the text width */
-        display: inline-block; /* Ensure the element is inline-block */
-        width: auto /* Ensure the width is auto to fit the text */
-    }
-</style>
-
-<script>
-    // Add focus and blur event listeners to the summary element
-    document.querySelectorAll('details summary').forEach(el => {
-        el.setAttribute('tabindex', '0'); // Make it focusable
-        el.addEventListener('focus', () => {
-            el.classList.add('focus-outline'); // Add the outline class on focus
-        });
-        el.addEventListener('blur', () => {
-            el.classList.remove('focus-outline'); // Remove the outline class on blur
-        });
-    });
-</script>
 </head>
-<body class="book toc2 toc-left">
+<body class="article">
 <div id="header">
-<h1>Standard for beskrivelse av datasett med høy verdi (HVD-DCAT-AP-NO)</h1>
+<h1>Rammeverk for Nasjonale grunndata</h1>
 <div class="details">
-<span id="author" class="author">Digitaliseringsdirektoratet (Digdir) / The Norwegian Digitalisation Agency</span><br>
-</div>
-<div id="toc" class="toc2">
-<div id="toctitle">Innholdsfortegnelse</div>
-<ul class="sectlevel1">
-<li><a href="#_abstract_in_english"><em>Abstract in English</em></a></li>
-<li><a href="#Om-denne-standarden">1. Om denne standarden</a>
-<ul class="sectlevel2">
-<li><a href="#Innledning">1.1. Innledning</a></li>
-<li><a href="#Omfang-og-avgrensing">1.2. Omfang og avgrensing</a></li>
-<li><a href="#Forvaltningsregime">1.3. Forvaltningsregime</a></li>
-<li><a href="#Om-kravene">1.4. Om kravnivåene i denne standarden</a></li>
-<li><a href="#Samsvarskrav">1.5. Krav til samsvar</a>
-<ul class="sectlevel3">
-<li><a href="#_krav_til_applikasjoner_som_leverer_metadata">1.5.1. Krav til applikasjoner som leverer metadata</a></li>
-<li><a href="#_krav_til_applikasjoner_som_mottar_metadata">1.5.2. Krav til applikasjoner som mottar metadata</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#Forenklet-fremstilling-av-kravene">2. Forenklet fremstilling av kravene i HVD-DCAT-AP-NO</a>
-<ul class="sectlevel2">
-<li><a href="#_hvd_spesifikke_krav">2.1. HVD-spesifikke krav</a></li>
-<li><a href="#_eksempel_på_et_hvd">2.2. Eksempel på et HVD</a></li>
-</ul>
-</li>
-<li><a href="#Spesifikasjon-per-klasse">3. Krav til RDF-representasjon av klassene i HVD-DCAT-AP-NO</a>
-<ul class="sectlevel2">
-<li><a href="#Datasett">3.1. Klassen Datasett (dcat:Dataset)</a>
-<ul class="sectlevel3">
-<li><a href="#Datasett-obligatoriske-egenskaper">3.1.1. Obligatoriske egenskaper for klassen <em>Datasett</em></a>
-<ul class="sectlevel4">
-<li><a href="#Datasett-gjeldendeLovgivning">Datasett – gjeldende lovgivning (dcatap:applicableLegislation)</a></li>
-<li><a href="#Datasett-hvdKategori">Datasett – HVD-kategori (dcatap:hvdCategory)</a></li>
-</ul>
-</li>
-<li><a href="#Datasett-anbefalte-egenskaper">3.1.2. Anbefalte egenskaper for klassen <em>Datasett</em></a>
-<ul class="sectlevel4">
-<li><a href="#Datasett-datasettdistribusjon">Datasett – datasettdistribusjon (dcat:distribution)</a></li>
-</ul>
-</li>
-<li><a href="#Datasett-valgfrie-egenskaper">3.1.3. Valgfrie egenskaper for klassen <em>Datasett</em></a>
-<ul class="sectlevel4">
-<li><a href="#Datasett-iSamsvarMed">Datasett – i samsvar med (dct:conformsTo)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#Datasettserie">3.2. Klassen Datasettserie (dcat:DatasetSeries)</a>
-<ul class="sectlevel3">
-<li><a href="#Datasettserie-obligatoriske-egenskaper">3.2.1. Obligatoriske egenskaper for klassen <em>Datasettserie</em></a>
-<ul class="sectlevel4">
-<li><a href="#Datasettserie-gjeldendeLovgivning">Datasettserie – gjeldende lovgivning (dcatap:applicableLegislation)</a></li>
-<li><a href="#Datasettserie-hvdKategori">Datasettserie – HVD-kategori (dcatap:hvdCategory)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#Datatjeneste">3.3. Klassen Datatjeneste (dcat:DataService)</a>
-<ul class="sectlevel3">
-<li><a href="#Datatjeneste-obligatoriske-egenskaper">3.3.1. Obligatoriske egenskaper for klassen <em>Datatjeneste</em></a>
-<ul class="sectlevel4">
-<li><a href="#Datatjeneste-dokumentasjon">Datatjeneste – dokumentasjon (foaf:page)</a></li>
-<li><a href="#Datatjeneste-gjeldendeLovgivning">Datatjeneste – gjeldende lovgivning (dcatap:applicableLegislation)</a></li>
-<li><a href="#Datatjeneste-hvdKategori">Datatjeneste – HVD-kategori (dcatap:hvdCategory)</a></li>
-</ul>
-</li>
-<li><a href="#Datatjeneste-anbefalte-egenskaper">3.3.2. Anbefalte egenskaper for klassen <em>Datatjeneste</em></a>
-<ul class="sectlevel4">
-<li><a href="#Datatjeneste-endepunktsbeskrivelse">Datatjeneste – endepunktsbeskrivelse (dcat:endpointDescription)</a></li>
-<li><a href="#Datatjeneste-tilgjengeliggjor-datasett">Datatjeneste – tilgjengeliggjør datasett (dcat:servesDataset)</a></li>
-</ul>
-</li>
-<li><a href="#Datatjeneste-valgfrie-egenskaper">3.3.3. Valgfrie egenskaper for klassen <em>Datatjeneste</em></a>
-<ul class="sectlevel4">
-<li><a href="#Datatjeneste-lisens">Datatjeneste – lisens (dct:license)</a></li>
-<li><a href="#Datatjeneste-rettigheter">Datatjeneste – rettigheter (dct:rights)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#Distribusjon">3.4. Klassen Distribusjon (dcat:Distribution)</a>
-<ul class="sectlevel3">
-<li><a href="#Distribusjon-obligatoriske-egenskaper">3.4.1. Obligatoriske egenskaper for klassen <em>Distribusjon</em></a>
-<ul class="sectlevel4">
-<li><a href="#Distribusjon-gjeldendeLovgivning">Distribusjon – gjeldende lovgivning (dcatap:applicableLegislation)</a></li>
-</ul>
-</li>
-<li><a href="#Distribusjon-anbefalte-egenskaper">3.4.2. Anbefalte egenskaper for klassen <em>Distribusjon</em></a>
-<ul class="sectlevel4">
-<li><a href="#Distribusjon-lisens">Distribusjon – lisens (dct:license)</a></li>
-<li><a href="#Distribusjon-tilganstjeneste">Distribusjon – tilgangstjeneste (dcat:accessService)</a></li>
-</ul>
-</li>
-<li><a href="#Distribusjon-valgfrie-egenskaper">3.4.3. Valgfrie egenskaper for klassen <em>Distribusjon</em></a>
-<ul class="sectlevel4">
-<li><a href="#Distribusjon-i-samsvar-med">Distribusjon – i samsvar med (dct:conformsTo)</a></li>
-<li><a href="#Distribusjon-rettigheter">Distribusjon – rettigheter (dct:rights)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#Spesielle_temaer">4. Noen spesielle temaer</a>
-<ul class="sectlevel2">
-<li><a href="#Spesielt_om_juridisk_info">4.1. Spesielt om juridisk informasjon om datasett med høy verdi</a></li>
-<li><a href="#Spesielt_om_distribusjoner_datatjenester">4.2. Spesielt om distribusjoner og datatjenester for datasett med høy verdi</a></li>
-<li><a href="#Spesifikke_datakrav">4.3. Spesifikke krav til data i datasett med høy verdi</a></li>
-</ul>
-</li>
-<li><a href="#URIer-i-bruk">Vedlegg A - Navnerom som brukes i standarden</a></li>
-<li><a href="#Endringslogg">Endringslogg</a>
-<ul class="sectlevel2">
-<li><a href="#Endringer-v1-0-x">Endringer fra v.1.0.0 til 1.0.x</a></li>
-</ul>
-</li>
-</ul>
+<span id="author" class="author">Arbeidsgruppen for nasjonale grunndata</span><br>
 </div>
 </div>
 <div id="content">
@@ -686,254 +447,182 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="imageblock">
 <div class="content">
-<a class="image" href="https://digdir.no/"><img src="images/Digdir.png" alt="Digdir-logo" width="30%"></a>
+<a class="image" href="https://digdir.no/"><img src="images/Digdir.png" alt="Digdir" width="50%"></a>
 </div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tips"></i>
-</td>
-<td class="content">
-Dette dokumentet kan også lastes ned <a href="files/hvd-dcat-ap-no.pdf">som PDF</a>.
-</td>
-</tr>
-</table>
 </div>
 <div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Merk"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<strong>Innmelding av feil og mangler:</strong><br>
-Dersom du finner feil eller mangler i dokumentet, ber vi om at dette meldes inn på <a href="https://github.com/Informasjonsforvaltning/hvd-dcat-ap-no/issues" class="ext-link" target="_blank" rel="noopener">Github Issues &#x29C9;</a>. Dersom du ikke allerede har bruker på Github kan du opprette bruker gratis.
+<div class="paragraph">
+<p><strong>Om dokumentet</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Dato:</strong> august 2025
+<strong>Versjon:</strong> 1.0<br>
+<strong>Dokumenteier:</strong> Arbeidsgruppen for nasjonale grunndata (Digdir)<br>
+<strong>Hensikt:</strong> Dette dokumentet skal beskrive rammeverk for Nasjonale grunndata, det vil si hvilke rutiner, prosesser, roller og aktører som må på plass for at Nasjonale grunndata skal forvaltes på en helhetlig måte på tvers av norsk offentlig sektor.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p><strong>Lisens</strong>: <a href="https://creativecommons.org/licenses/by/4.0/" class="ext-link" target="_blank" rel="noopener">CC BY 4.0 &#x29C9;</a><br>
-<strong>Status</strong>: Gjeldende fra 2025-01-01<br>
-<strong>Versjon</strong>: v.1.0.1 (se <a href="#Endringslogg"><em>Endringslogg</em></a>)<br>
-<strong>Publisert</strong>: 2024-11-26 (v.1.0.0)<br>
-<strong>Oppdatert</strong>: 2024-12-04 (v.1.0.x)<br>
-<strong>Gjeldende versjon</strong>: <a href="https://data.norge.no/specification/hvd-dcat-ap-no/" class="bare">https://data.norge.no/specification/hvd-dcat-ap-no/</a><br>
-<strong>Forrige versjon</strong>: ingen<br>
-<strong>Redaktørens utkast</strong>: <a href="https://informasjonsforvaltning.github.io/hvd-dcat-ap-no/" class="bare">https://informasjonsforvaltning.github.io/hvd-dcat-ap-no/</a><br></p>
-</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_abstract_in_english"><a class="anchor" href="#_abstract_in_english"></a><em>Abstract in English</em></h2>
+<h2 id="_innledning_hva_er_nasjonale_grunndata_og_hvorfor_er_det_behov_for_et_rammeverk"><a class="link" href="#_innledning_hva_er_nasjonale_grunndata_og_hvorfor_er_det_behov_for_et_rammeverk">Innledning: Hva er Nasjonale grunndata og hvorfor er det behov for et rammeverk</a></h2>
 <div class="sectionbody">
-<details>
-<summary class="title"><em><strong>English speaking readers, you may click here</strong> to read what this standard is about and how you may read it.</em></summary>
+<div class="paragraph">
+<p>Rammeverket for Nasjonale grunndata har sitt utspring i Skate-sak 15/22. Saksforslaget dreide seg opprinnelig om kun én gang-prinsippet. Arbeidet med saken ble innledet med et innsiktsarbeid for å utvide problemforståelsen. Innsiktsarbeidet viste at utfordringsbildet er sammensatt med sterke avhengigheter mellom de enkeltvise utfordringene. Det er å vanskelig å peke på en entydig løsning for hver enkelt utfordring og de må sees i sammenheng. I tillegg er det svært mange interessenter med ulike perspektiver som gjør at fokus på en utfordring kan lede til nye utfordringer for en eller flere aktører.
+Det er imidlertid elementer i alle utfordringene som peker mot behov for å etablere en felles og helhetlig modell for forvaltning, styring, prioritering og koordinering av viktige data i offentlig sektor. Fraværet av en slik modell fører til manglende rolleavklaringer, ukoordinerte initiativer og utfordringer med å sikre videreutvikling og effektiv bruk av sentrale data.</p>
+</div>
+<div class="sect2">
+<h3 id="_kun_én_gang"><a class="link" href="#_kun_én_gang">Kun én gang</a></h3>
+<div class="paragraph">
+<p>Økt deling av data mellom offentlige aktører har lenge vært et politisk mål. Mye av motivasjonen til økt deling av data i offentlig sektor ligger i prinsippet om kun én gang. Kun én gang innebærer at innbyggere og virksomheter skal oppgi opplysninger til det offentlige kun én gang, til kun én offentlig aktør – og deretter deles og gjenbrukes mellom aktører. Dette forhindrer at flere aktører samler inn og forvalter de samme dataene.</p>
+</div>
+<div class="paragraph">
+<p>Iverksetting av kun én gang-prinsippet kan gi store ressursbesparelser og legger grunnlaget for en mer effektiv offentlig forvaltning. Hovedgevinstene ved kun én gang kan oppsummeres i følgende punkter:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Brukeren i sentrum:</strong> istedenfor at innbygger og næringsliv skal fungere som brevdue for offentlig sektor når de mottar tjenester, oppgir de dataene sine én gang til én aktør.</p>
+</li>
+<li>
+<p><strong>Effektivisering:</strong> i stedenfor at mange etater bruker ressurser på å samle inn og forvalte samme type data, gjøres dette av én etat som da legger til rette for deling med de etatene som har grunnlag for å gjenbruke dataene.</p>
+</li>
+<li>
+<p><strong>Bedre datakvalitet:</strong> istedenfor at samme type data forvaltes i ulike lokalversjoner, forvaltes de i én autoritativ kilde som alltid er korrekt og oppdatert. Dette gir bedre og riktigere data.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Konsumenter av data har i et økende omfang behov for data til å forbedre prosesser, oppgaveløsning og tjenester, og dette behovet kan for den enkelte virksomhet være en større driver enn kun én gang. Behovet for stabil tilgang til data med avklart kvalitet, forutsigbare støtteprosesser og -funksjoner vil likevel være viktig, uavhengig av drivkreftene for behovet.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_nasjonale_grunndata"><a class="link" href="#_nasjonale_grunndata">Nasjonale grunndata</a></h3>
+<div class="paragraph">
+<p>Siden kun én gang først ble omtalt i Meld. St. 27 (2015–2016) Digital agenda for Norge — IKT for en enklere hverdag og økt produktivitet har data blitt viktigere og betraktes nå som sentral infrastruktur i samfunnet.</p>
+</div>
+<div class="paragraph">
+<p>Av alle dataene som eksisterer og brukes i offentlig sektor, er det noen typer data som er særlig viktige på et samfunnsnivå. Disse særlig viktige dataene kaller vi nasjonale grunndata, og visjonen for nasjonale grunndata for Norge er:</p>
+</div>
+<div class="literalblock">
 <div class="content">
-<div class="paragraph">
-<p><em>This standard, HVD-DCAT-AP-NO, is the Norwegian application profile of <a href="https://semiceu.github.io/uri.semic.eu-generated/DCAT-AP/releases/3.0.0-hvd/" class="ext-link" target="_blank" rel="noopener">EUs DCAT-AP High Value Datasets &#x29C9;</a>. It specifies how to describe high value datasets, and how to make the descriptions available in machine-readable RDF-based formats. This standard supplements and thus also should be used together with <a href="https://informasjonsforvaltning.github.io/dcat-ap-no/" class="ext-link" target="_blank" rel="noopener">DCAT-AP-NO &#x29C9;</a>. Only HVD-specific requirements are specified in this standard.</em></p>
+<pre>Nasjonale grunndata er opplysninger mange har bruk for og som er særlig viktig for samfunnets funksjoner og tjenester. De skal ha tilstrekkelig kvalitet og være enkelt tilgjengelig. </pre>
 </div>
-<div class="paragraph">
-<p><em>The standard is mainly in Norwegian. However, in <a href="#Spesifikasjon-per-klasse">Chap. 3</a> which requires a certain level of knowledge in RDF, the specification of the classes and properties is in both Norwegian and English.</em></p>
-</div>
-</div>
-</details>
-<!-- toc disabled -->
-</div>
-</div>
-<div class="sect1">
-<h2 id="Om-denne-standarden"><a class="anchor" href="#Om-denne-standarden"></a>1. Om denne standarden</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="Innledning"><a class="anchor" href="#Innledning"></a>1.1. Innledning</h3>
-<div class="paragraph">
-<p>Formålet med standarden er å legge til rette for utveksling av beskrivelser av datasett med høy verdi (på engelsk <em>High Value Dataset</em>, forkortet til HVD). <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R0138" class="ext-link" target="_blank" rel="noopener">HVD-forordningen (EU) 2023/138 &#x29C9;</a> som p.t. er under vurdering i EØS-EFTA, spesifiserer datasett av høy verdi innenfor følgende seks tematiske kategorier: (1) geodata, (2) jordobservasjon og miljø, (3) meteorologi, (4) statistikk, (5) selskaps- og eierskapsdata, og (6) mobilitet. Forordningen stiller bl.a. også et minimumskrav til metadata i beskrivelser av HVD.</p>
 </div>
 <div class="paragraph">
-<p>Denne standarden supplerer <a href="https://data.norge.no/specification/dcat-ap-no" class="ext-link" target="_blank" rel="noopener">Standard for beskrivelse av datasett, datatjenester og datakataloger (DCAT-AP-NO) &#x29C9;</a>, og beskriver hvordan DCAT-AP-NO brukes til å implementere minimumskrav til metadata for HVD spesifisert i ovennevnte forordningen.</p>
-</div>
-<div class="paragraph">
-<p>Se ellers <a href="https://data.norge.no/specification/dcat-ap-no/#Innledning" class="ext-link" target="_blank" rel="noopener">formålet med DCAT-AP-NO  &#x29C9;</a> som også gjelder for denne standarden.</p>
+<p>Vi har i dag godt forvaltede data i felles offentlige registre; enhetsregisteret, folkeregisteret, kontakt- og reservasjonsregisteret og matrikkelen.  Dataene i disse registrene er særlig viktige fordi de inngår i svært mange prosesser og verdikjeder i offentlig forvaltning (f.eks. tjenesteyting og saksbehandling). Ikke minst kan dataene være viktige i kritiske samfunnsfunksjoner tillagt nødetatene. Det er imidlertid ikke automatikk i at data samlet inn til et formål automatisk er grunndata for samfunnet. En rekke data er svært viktige for en enkelt virksomhet eller en enkelt sektor hvor de brukes til ulike formål, uten at de er viktige på tvers i samfunnet. Antakeligvis vil kun en delmengde av innsamlede data, for eksempel i et register, være Nasjonale grunndata.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Omfang-og-avgrensing"><a class="anchor" href="#Omfang-og-avgrensing"></a>1.2. Omfang og avgrensing</h3>
+<h3 id="_et_rammeverk_sørger_for_kvalitet_og_tilgang_på_nasjonale_grunndata"><a class="link" href="#_et_rammeverk_sørger_for_kvalitet_og_tilgang_på_nasjonale_grunndata">Et rammeverk sørger for kvalitet og tilgang på nasjonale grunndata</a></h3>
 <div class="paragraph">
-<p>Standarden inneholder kun spesifikasjon til hvordan DCAT-AP-NO brukes til å implementere minimumskrav til metadata for HVD spesifisert i den ovennevnte HVD-forordningen. Kravene ellers i DCAT-AP-NO gjelder også for HVD. Denne standarden skal derfor brukes sammen med, og ikke istedenfor, DCAT-AP-NO.</p>
+<p>For å sikre tilstrekkelig kvalitet og tilgjengelighet for nasjonale grunndata, må det tydeliggjøres hvem som har ansvar for hva, hva som ligger i ansvaret og hvordan aktørene skal samhandle. Et rammeverk må på plass for at vi skal klare å nå visjonen om Nasjonale grunndata for Norge.</p>
 </div>
 <div class="paragraph">
-<p>Standarden er ikke tenkt brukt for å beskrive fagsystem.</p>
+<p>Rammeverket for Nasjonale grunndata bidrar til at data med stor nasjonal nytte forvaltes og utvikles i et langsiktig perspektiv, i tråd med samfunnsbehov og mål. Rammeverket sikrer at de nasjonale grunndataene forvaltes på en helhetlig måte. Tilbydere av data får bedre organisatoriske rammer for prioritering og videreutvikling av dataene, samt at rammeverket kan bidra til avklaring og tydeliggjøring av de juridiske rammene. Konsumenter av data har trygg tilgang til data, og disse har tilstrekkelig kvalitet.</p>
+</div>
+<div class="paragraph">
+<p>Rammeverket innebærer forpliktelser for både datatilbydere og -konsumenter, og er avhengig av politisk vilje og oppmerksomhet for å lykkes.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Forvaltningsregime"><a class="anchor" href="#Forvaltningsregime"></a>1.3. Forvaltningsregime</h3>
+<h3 id="_på_lag_med_dagens_styring"><a class="link" href="#_på_lag_med_dagens_styring">På lag med dagens styring</a></h3>
 <div class="paragraph">
-<p>Dersom det oppdages mindre feil i standarden (stavefeil, upresis formulering, lenkefeil etc.), vil ikke korrigering av disse utløse en ny versjon. Disse korrigeringene skal imidlertid dokumenteres.</p>
-</div>
-<div class="paragraph">
-<p>Utarbeidelse av nye versjoner av denne standarden initieres av Digitaliseringsdirektoratet. Den primære kilden til nye versjoner vil være endringer i EU-standarden <a href="https://semiceu.github.io/DCAT-AP/releases/2.2.0-hvd/" class="ext-link" target="_blank" rel="noopener">DCAT-AP High Value Datasets &#x29C9;</a> som denne standarden baseres på, og/eller <a href="https://data.norge.no/specification/dcat-ap-no" class="ext-link" target="_blank" rel="noopener">DCAT-AP-NO &#x29C9;</a> som denne supplerer.</p>
-</div>
-<div class="paragraph">
-<p>Digitaliseringsdirektoratet vil i forbindelse med nye versjoner av ovennevnte bakenforliggende standarder avgjøre om endringene er så store at det bør nedsettes en egen arbeidsgruppe bestående av relevante aktører, eller om revisjonen kan utføres av Digitaliseringsdirektoratet selv. Forslaget til ny hovedversjon (engelsk "<em>major release</em>") sendes uansett på høring. De innkomne høringskommentarene behandles hos Digitaliseringsdirektoratet, og resulterer i et forslag som oversendes <a href="https://www.digdir.no/standarder/arkitektur-og-standardiseringsradet/3918" class="ext-link" target="_blank" rel="noopener">Arkitektur- og standardiseringsrådet &#x29C9;</a>. I lys av anbefalinger fra rådet vil Digitaliseringsdirektoratet fatte beslutning om den reviderte hovedversjonen av standarden skal være gjeldende eller forkastes.</p>
-</div>
-<div class="paragraph">
-<p>Gjeldende og eventuelle tidligere versjoner av standarden skal være tilgjengelige på Digitaliseringsdirektoratets nettsider, slik at det er enkelt å finne ut når tidligere versjoner var gyldige, og hvilke endringer som er foretatt mellom to versjoner.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Om-kravene"><a class="anchor" href="#Om-kravene"></a>1.4. Om kravnivåene i denne standarden</h3>
-<div class="paragraph">
-<p>Standarden bruker ordene «obligatorisk» («SKAL», «MÅ», <em>"mandatory"</em>, <em>"required"</em>, <em>"SHALL"</em>, <em>"MUST"</em>), «anbefalt» («BØR», <em>"recommended"</em>, <em>"SHOULD"</em>) og «valgfri» («KAN», <em>"optional"</em>, <em>"MAY"</em>), med de samme betydningene som er <a href="https://data.norge.no/specification/dcat-ap-no/#Om-kravene" class="ext-link" target="_blank" rel="noopener">forklart i DCAT-AP-NO &#x29C9;</a>. Forklaringen gjentas derfor ikke her.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Samsvarskrav"><a class="anchor" href="#Samsvarskrav"></a>1.5. Krav til samsvar</h3>
-<div class="sect3">
-<h4 id="_krav_til_applikasjoner_som_leverer_metadata"><a class="anchor" href="#_krav_til_applikasjoner_som_leverer_metadata"></a>1.5.1. Krav til applikasjoner som leverer metadata</h4>
-<div class="paragraph">
-<p>For å være i samsvar med denne standarden, SKAL en applikasjon som levere metadata:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Levere en beskrivelse av katalogen, som minimum med de obligatoriske egenskapene spesifisert i <a href="https://data.norge.no/specification/dcat-ap-no/#Katalog" class="ext-link" target="_blank" rel="noopener">klassen Katalog (dcat:Catalog) i DCAT-AP-NO &#x29C9;</a>.</p>
-</li>
-<li>
-<p>Levere beskrivelser av datasettene som er i katalogen, som minimum med de obligatoriske egenskapene spesifisert i klassen Datasett (dcat:Dataset) i  <a href="#Datasett">denne standarden</a> og i <a href="https://data.norge.no/specification/dcat-ap-no/#Datasett" class="ext-link" target="_blank" rel="noopener">DCAT-AP-NO &#x29C9;</a>.</p>
-</li>
-<li>
-<p>Levere beskrivelser av distribusjoner, hvis noen, av datasett i katalogen, som minimum med de obligatoriske egenskapene spesifisert i klassen Distribusjon (dcat:Distribution) i <a href="#Distribusjon">denne standarden</a> og i <a href="https://data.norge.no/specification/dcat-ap-no/#Distribusjon" class="ext-link" target="_blank" rel="noopener">DCAT-AP-NO &#x29C9;</a>.</p>
-</li>
-<li>
-<p>Levere beskrivelser av datatjenester, hvis noen, i katalogen, som minimum med de obligatoriske egenskapene spesifisert i klassen Datatjeneste (dcat:DataService) i <a href="#Datatjeneste">denne standarden</a> og i <a href="https://data.norge.no/specification/dcat-ap-no/#Datatjeneste" class="ext-link" target="_blank" rel="noopener">DCAT-AP-NO &#x29C9;</a>.</p>
-</li>
-<li>
-<p>Levere informasjon om alle organisasjoner/aktører som er involvert i beskrivelsene av katalogen, datasettene osv., som minimum med de obligatoriske egenskapene spesifisert i klassen Aktør i <a href="https://data.norge.no/specification/dcat-ap-no/#Akt%C3%B8r" class="ext-link" target="_blank" rel="noopener">DCAT-AP-NO &#x29C9;</a>.</p>
-</li>
-<li>
-<p>Bruke de kontrollerte vokabularene som er beskrevet i Merknad til den enkelte egenskapen i <a href="#Spesifikasjon-per-klasse">denne standarden</a> og i <a href="https://data.norge.no/specification/dcat-ap-no/#Spesifikasjon-per-klasse" class="ext-link" target="_blank" rel="noopener">DCAT-AP-NO &#x29C9;</a>.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_krav_til_applikasjoner_som_mottar_metadata"><a class="anchor" href="#_krav_til_applikasjoner_som_mottar_metadata"></a>1.5.2. Krav til applikasjoner som mottar metadata</h4>
-<div class="paragraph">
-<p>For å være i samsvar med denne standarden, SKAL en applikasjon som mottar metadata:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Prosessere informasjon for alle klasser og egenskaper som er spesifisert i denne standarden og i DCAT-AP-NO.</p>
-</li>
-<li>
-<p>Prosessere informasjon for alle kontrollerte vokabularer som er eksplisitt spesifisert for de enkelte egenskapene i denne standarden og i DCAT-AP-NO.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>I konteksten av denne standarden, betyr det «å prosessere» at den mottakende applikasjon aksepterer innkommende data og transparent videreformidler dataene til aktuelle applikasjoner og tjenester.</p>
-</div>
+<p>Selv om rammeverket introduserer nye roller og prosesser, spiller rammeverket på lag med eksisterende styringsstrukturer i forvaltningen, deriblant sektorprinsippet. Samtidig inneholder rammeverket mekanismer som muliggjør tverrsektoriell forvaltning og bruk av data. Grunnleggende i rammeverket er forståelsen for at dataforvaltningsoppgavene som blir pålagt én aktør vil gi effektiviseringsgevinst hos en annen aktør. I det store bildet kommer en slik fordeling av innsats og gevinst hele samfunnet til gode.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Forenklet-fremstilling-av-kravene"><a class="anchor" href="#Forenklet-fremstilling-av-kravene"></a>2. Forenklet fremstilling av kravene i HVD-DCAT-AP-NO</h2>
+<h2 id="_del_1_organisering_roller_og_aktører"><a class="link" href="#_del_1_organisering_roller_og_aktører">Del 1: Organisering, roller og aktører</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Denne standarden inneholder kun HVD-spesifikke krav. Kravene ellers i DCAT-AP-NO gjelder også for HVD. Denne standarden skal derfor brukes sammen med, og ikke istedenfor, DCAT-AP-NO.</p>
+<p>Dette kapitlet beskriver rammeverkets hovedaktører og samspillet dem imellom. Oppsummert består modellen av et styrende organ, en nasjonal grunndatakoordinator og grunndataforvaltere. Se figur under:</p>
 </div>
-<div class="sect2">
-<h3 id="_hvd_spesifikke_krav"><a class="anchor" href="#_hvd_spesifikke_krav"></a>2.1. HVD-spesifikke krav</h3>
-<div class="paragraph">
-<p><a href="#img-ForenkletModell">Figur 1</a> viser en forenklet fremstilling av kravene i HVD-DCAT-AP-NO. Den viser kun obligatoriske og anbefalte opplysninger som skal/bør tas med i beskrivelse av datasett, datasettserier, datatjenester og distribusjoner, i konteksten HVD. HVD-DCAT-AP-NO skal brukes sammen med DCAT-AP-NO, ettersom den supplerer DCAT-AP-NO. HVD-spesifikke krav er markert i gult i tegningen.</p>
-</div>
-<div class="paragraph">
-<p>Tegningen er ikke ment som en formell representasjon av standarden, men kun for å gi en visuell oversikt over noen av kravene. Tekniske krav til hvordan  <em>HVD-spesifikke</em> opplysninger skal uttrykkes i RDF er spesifisert videre i standarden. Før eventuell uoverensstemmelse mellom tegningen og den tekstlige spesifikasjonen blir rettet opp, har den tekstlige spesifikasjonen forrang. Samme forrang gjelder også når det gjelder eventuelle uoverensstemmelser mellom tekstlige spesifikasjoner og tegninger i resten av standarden.</p>
-</div>
-<div id="img-ForenkletModell" class="imageblock">
+<div class="imageblock">
 <div class="content">
-<a class="image" href="images/HVD-DCAT-AP-NO-forenklet-fremstilling.png"><img src="images/HVD-DCAT-AP-NO-forenklet-fremstilling.png" alt="Tegning med fire klasser og relasjoner mellom dem. Innholdet er forklart i teksten."></a>
+<img src="images/NG_organisering.png" alt="NG organisering">
 </div>
-<div class="title">Figur 1. Forenklet fremstilling av kravene i HVD-DCAT-AP-NO, med kun obligatoriske og anbefalte krav.</div>
+<div class="title">Figure 1. Organisering av nasjonale grunndata</div>
 </div>
+<div class="sect2">
+<h3 id="_styrende_organ"><a class="link" href="#_styrende_organ">Styrende organ</a></h3>
 <div class="paragraph">
-<p>I tillegg til de ikke-HVD-spesifikke obligatoriske kravene i DCAT-AP-NO som ikke gjentas i denne standarden, illustrerer figuren bl.a. følgende obligatoriske krav som er HVD-spesifikke:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Et <strong>datasett</strong> med høy verdi SKAL gjøres tilgjengelig. Se HVD-forordningen om det aktuelle datasettet skal gjøres tilgjengelig både via API (<strong>datatjeneste</strong>) og som bulknedlasting (<strong>distribusjon</strong>), eller en av de to måtene.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Et datasett kan inngå i en <strong>datasettserie</strong>. Se også <a href="https://data.norge.no/specification/dcat-ap-no/#Om-Datasettserie" class="ext-link" target="_blank" rel="noopener">Om bruk av datasettserie i DCAT-AP-NO &#x29C9;</a>.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><strong>Datasett</strong> med høy verdi og relaterte <strong>distribusjon</strong>er og APIer (<strong>datatjeneste</strong>r), samt ev. <strong>datasettserie</strong>(r) som datasettet inngår i, SKAL oppgi <a href="http://data.europa.eu/eli/reg_impl/2023/138/oj" class="ext-link" target="_blank" rel="noopener">HVD-forordningen &#x29C9;</a> som <strong>gjeldende lovgivning</strong>.</p>
-</li>
-<li>
-<p>Det SKAL oppgis <strong>HVD-kategori</strong>(er) et <strong>datasett</strong> med høy verdi tilhører. Samme krav gjelder også APIer (<strong>datatjeneste</strong>r) som tilgjengeliggjør datasett med høy verdi og ev. <strong>datasettserie</strong>(r) som et datasett med høy verdi inngår i. <a href="https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/high-value-dataset-category" class="ext-link" target="_blank" rel="noopener">EUs kontrollerte vokabular for HVD-kategorier &#x29C9;</a> SKAL brukes.</p>
-</li>
-<li>
-<p>Et API (en <strong>datatjeneste</strong>) som tilgjengeliggjør datasett med høy verdi, SKAL ha <strong>dokumentasjon</strong> som beskriver bl.a. tjenestekvalitet.</p>
-</li>
-</ul>
+<p>Nasjonale grunndata trenger et styrende organ som gir nasjonal grunndatakoordinator oppdrag og prioriterer arbeid knyttet til utviklingen av Nasjonale grunndata. Tilsvarende må saker fra nasjonal grunndatakoordinator kunne løftes til det styrende organet.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_eksempel_på_et_hvd"><a class="anchor" href="#_eksempel_på_et_hvd"></a>2.2. Eksempel på et HVD</h3>
+<h3 id="_nasjonal_grunndatakoordinator_grunndatakoordinator"><a class="link" href="#_nasjonal_grunndatakoordinator_grunndatakoordinator">Nasjonal grunndatakoordinator (grunndatakoordinator)</a></h3>
 <div class="paragraph">
-<p>Eksemplet her er basert på datasettet <a href="https://data.norge.no/datasets/9b8fbdd7-7294-39e2-959b-24dc8ab0df4a" class="ext-link" target="_blank" rel="noopener">«Virksomhetsinformasjon - i henhold til STIRDatas modell» beskrevet i Felles datakatalog (data.norge.no) &#x29C9;</a>. Eksemplet har kun som hensikt å illustrere bruken av standarden, og gjenspeiler ikke nødvendigvis virkeligheten. Eksemplet er heller ikke komplett. Det inneholder kun noen av de opplysningene som det stilles krav til i denne standarden. Minimumsopplysninger er <strong>uthevet</strong>, og <code>maskinlesbare verdier</code> oppgitt i parenteser.</p>
+<p>Grunndatakoordinatoren er en sentral aktør som sitter på den totale oversikten over alle Nasjonale grunndata, deres tilbydere, konsumenter samt pågående utviklingsinitiativer. Rollens hovedformål er å sikre enhetlig, stabil retning på utviklingen og forvaltningen av nasjonale grunndata.</p>
 </div>
+<div class="sect3">
+<h4 id="_grunndatakoordinatorens_hovedansvar_og_oppgaver"><a class="link" href="#_grunndatakoordinatorens_hovedansvar_og_oppgaver">Grunndatakoordinatorens hovedansvar og oppgaver</a></h4>
+<div class="sect4">
+<h5 id="_1_ansvarlig_for_rammeverket"><a class="link" href="#_1_ansvarlig_for_rammeverket">1. Ansvarlig for rammeverket:</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>gjeldende lovgivning</strong>: HVD-forordningen (<code>http://data.europa.eu/eli/reg_impl/2023/138/oj</code> )</p>
+<p>Forvalter rammeverket, og utvikler og justerer det etter behov. Dette gjelder bl.a. prinsipper og kriterier for nasjonale grunndata, prosesser, rollefordeling og avtalemaler.</p>
 </li>
 <li>
-<p><strong>HVD-kategori</strong>: selskaps- og eierskapsdata (<code>http://data.europa.eu/bna/c_a9135398</code>)</p>
+<p>Fanger opp, og – der det er hensiktsmessig – inkorporerer krav fra kommende EU-regelverk.</p>
 </li>
 <li>
-<p>i samsvar med: STIRData business data model (<code>https://stirdata.github.io/data-specification/</code>)</p>
-</li>
-<li>
-<p><strong>datasettdistribusjon (bulknedlasting)</strong>:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>gjeldende lovgivning</strong>: HVD-forordningen (<code>http://data.europa.eu/eli/reg_impl/2023/138/oj</code>)</p>
-</li>
-<li>
-<p>lisens: CC BY 4.0 (<code>http://publications.europa.eu/resource/authority/licence/CC_BY_4_0</code>)</p>
-</li>
-<li>
-<p>i samsvar med: STIRData business data model (<code>https://stirdata.github.io/data-specification/</code>)</p>
+<p>Sørger for at rammeverket er lett å forstå for alle involverte.</p>
 </li>
 </ul>
 </div>
-</li>
-<li>
-<p><strong>datatjeneste (API)</strong>:</p>
+</div>
+<div class="sect4">
+<h5 id="_2_ansvarlig_for_nasjonal_grunndataoversikt"><a class="link" href="#_2_ansvarlig_for_nasjonal_grunndataoversikt">2. Ansvarlig for nasjonal grunndataoversikt:</a></h5>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>dokumentasjon</strong>: Enhetsregisterets dokumentasjon for åpne data (<code>https://data.brreg.no/enhetsregisteret/api/dokumentasjon/</code>)</p>
+<p>Utvikle og etablere grunndataoversikten med utgangspunkt i dagens felles offentlige registre.</p>
 </li>
 <li>
-<p><strong>gjeldende lovgivning</strong>: HVD-forordningen (<code>http://data.europa.eu/eli/reg_impl/2023/138/oj</code>)</p>
+<p>Sørge for å ha løpende oversikt over alle data som har blitt etablert som nasjonale grunndata, samt kandidater til vurdering.</p>
 </li>
 <li>
-<p><strong>HVD-kategori</strong>: selskaps- og eierskapsdata (<code>http://data.europa.eu/bna/c_a9135398</code>)</p>
+<p>Sørge for at oversikten er et kommuniserende verktøy som tydelig viser logiske sammenhenger og mulige koblinger mellom grunndata.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_3_ansvarlig_for_å_holde_oversikt_over_og_dokumentere_behov_for_nasjonale_grunndata_i_forvaltningen"><a class="link" href="#_3_ansvarlig_for_å_holde_oversikt_over_og_dokumentere_behov_for_nasjonale_grunndata_i_forvaltningen">3. Ansvarlig for å holde oversikt over og dokumentere behov for Nasjonale grunndata i forvaltningen:</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Vedlikeholde liste over behov, enten innmeldte eller identifisert av grunndatakoordinatoren selv ved hjelp av grunndataoversikten.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>synliggjør overlapp i data</p>
 </li>
 <li>
-<p>lisens: CC BY 4.0 (<code>http://publications.europa.eu/resource/authority/licence/CC_BY_4_0</code>)</p>
+<p>synliggjør manglende data</p>
+</li>
+<li>
+<p>tydeliggjør ansvar og manglende ansvar for data</p>
+</li>
+<li>
+<p>identifiserer behov for begrepsavklaringer</p>
+</li>
+<li>
+<p>Fasilitere dokumentering av effekt og samfunnsgevinst som følge av bruk av grunndata.</p>
+</li>
+<li>
+<p>Drive fram forståelse av verdien av Nasjonale grunndata og gevinster ved å ha en helhetlig utvikling av Nasjonale grunndata</p>
 </li>
 </ul>
 </div>
@@ -941,1228 +630,338 @@ Dersom du finner feil eller mangler i dokumentet, ber vi om at dette meldes inn 
 </ul>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="Spesifikasjon-per-klasse"><a class="anchor" href="#Spesifikasjon-per-klasse"></a>3. Krav til RDF-representasjon av klassene i HVD-DCAT-AP-NO</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>HVD-DCAT-AP-NO supplerer DCAT-AP-NO, og spesifiserer hvordan DCAT-AP-NO brukes til å implementere kravene i HVD-forordningen. HVD-DCAT-AP-NO inneholder kun krav som er HVD-spesifikke. Kravene i DCAT-AP-NO som ikke er HVD-spesifikke, gjentas ikke i HVD-DCAT-AP-NO, men de gjelder også for HVD. HVD-DCAT-AP-NO skal derfor brukes sammen med DCAT-AP-NO.</p>
-</div>
-<div class="sect2">
-<h3 id="Datasett"><a class="anchor" href="#Datasett"></a>3.1. Klassen Datasett (dcat:Dataset)</h3>
-<div class="paragraph">
-<p><a href="#diagram-Klassen-Datasett">Figur 2</a> viser klassen Datasett og dens egenskaper, samt klassene den refererer til. I figuren er differansen mellom kravene i HVD-DCAT-AP-NO og DCAT-AP-NO markert i gult. Kun kravene som er spesifikke for HVD er videre spesifisert i dette kapittelet. Kravene ellers til <a href="https://data.norge.no/specification/dcat-ap-no/#Datasett" class="ext-link" target="_blank" rel="noopener">klassen Datasett (dcat:Dataset) i DCAT-AP-NO &#x29C9;</a> gjelder også for denne klassen.</p>
-</div>
-<div id="diagram-Klassen-Datasett" class="imageblock">
-<div class="content">
-<a class="image" href="images/Klassen-Datasett.png"><img src="images/Klassen-Datasett.png" alt="Tegning med syv klasser og relasjoner mellom dem. Innholdet er forklart i teksten."></a>
-</div>
-<div class="title">Figur 2. Klassen Datasett og klassene den refererer til.</div>
-</div>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Dataset</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dcat:Dataset</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Subklasse av / <em>Subclass of</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://data.norge.no/specification/dcat-ap-no/#KatalogisertRessurs" class="ext-link" target="_blank" rel="noopener">dcat:Resource &#x29C9;</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Klassen brukes til å representere et datasett, dvs. en konseptuell entitet som representerer publisert informasjon.</p>
-<p class="tableblock"><em>This class is used to represent a conceptual entity that represents the information published.</em></p></td>
-</tr>
-</tbody>
-</table>
-<div class="sect3">
-<h4 id="Datasett-obligatoriske-egenskaper"><a class="anchor" href="#Datasett-obligatoriske-egenskaper"></a>3.1.1. Obligatoriske egenskaper for klassen <em>Datasett</em></h4>
 <div class="sect4">
-<h5 id="Datasett-gjeldendeLovgivning"><a class="anchor" href="#Datasett-gjeldendeLovgivning"></a>3.1.1.1. Datasett – gjeldende lovgivning (dcatap:applicableLegislation)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>applicable legislation</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dcatap:applicableLegislation</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://data.norge.no/specification/dcat-ap-no/#RegulativRessurs" class="ext-link" target="_blank" rel="noopener">eli:LegalResource &#x29C9;</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til lovgivningen som gir mandat til opprettelse eller behandling av datasettet.</p>
-<p class="tableblock"><em>This property is used to refer to the legislation that mandates the creation or management of the dataset.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1..n</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Obligatorisk / <em>Mandatory</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">For HVD SKAL en av verdiene være <code>http://data.europa.eu/eli/reg_impl/2023/138/oj</code>.</p>
-<p class="tableblock"><em>For HVD the value MUST include the ELI <code>http://data.europa.eu/eli/reg_impl/2023/138/oj</code>.</em></p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Eksempel i RDF Turtle:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;aDataset&gt; a dcat:Dataset ;
-   dcatap:applicableLegislation &lt;http://data.europa.eu/eli/reg_impl/2023/138/oj&gt; ; .</pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="Datasett-hvdKategori"><a class="anchor" href="#Datasett-hvdKategori"></a>3.1.1.2. Datasett – HVD-kategori (dcatap:hvdCategory)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>HVD category</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dcatap:hvdCategory</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">skos:Concept</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til HVD kategorien som dette datasettet tilhører.</p>
-<p class="tableblock"><em>This property is used to refer to HVD category to which this dataset belongs.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1..n</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Obligatorisk / <em>Mandatory</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Verdien SKAL hentes fra EUs kontrollerte vokabular  <a href="https://op.europa.eu/en/web/eu-vocabularies/concept-scheme/-/resource?uri=http://data.europa.eu/bna/asd487ae75" class="ext-link" target="_blank" rel="noopener">High-value dataset categories  &#x29C9;</a>.</p>
-<p class="tableblock"><em>The value MUST be chosen from EU&#8217;s controlled vocabulary <a href="https://op.europa.eu/en/web/eu-vocabularies/concept-scheme/-/resource?uri=http://data.europa.eu/bna/asd487ae75" class="ext-link" target="_blank" rel="noopener">High-value dataset categories  &#x29C9;</a>.</em></p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Eksempel i RDF Turtle:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;aDataset&gt; a dcat:Dataset ;
-   dcatap:hvdCategory &lt;http://data.europa.eu/bna/c_a9135398&gt; ; .</pre>
-</div>
+<h5 id="_4_ansvarlig_for_å_koordinere_og_fasilitere_utviklingen_av_nasjonale_grunndata"><a class="link" href="#_4_ansvarlig_for_å_koordinere_og_fasilitere_utviklingen_av_nasjonale_grunndata">4. Ansvarlig for å koordinere og fasilitere utviklingen av Nasjonale grunndata:</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Koordinere arbeidet med å omsette behov til handling og utviklingstiltak. I dette ligger å se sammenhenger, knytte sammen relevante aktører og forankre behov for innsats.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Datasett-anbefalte-egenskaper"><a class="anchor" href="#Datasett-anbefalte-egenskaper"></a>3.1.2. Anbefalte egenskaper for klassen <em>Datasett</em></h4>
-<div class="sect4">
-<h5 id="Datasett-datasettdistribusjon"><a class="anchor" href="#Datasett-datasettdistribusjon"></a>3.1.2.1. Datasett – datasettdistribusjon (dcat:distribution)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>dataset distribution</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dcat:distribution</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Distribusjon">dcat:Distribution</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til en tilgjengelig distribusjon for datasettet. Se også <a href="#Spesielt_om_distribusjoner_datatjenester"> 4.2, &#8220;Spesielt om distribusjoner og datatjenester for datasett med høy verdi&#8221;</a>.</p>
-<p class="tableblock"><em>This property is used to refer to an available distribution for the dataset.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0..n</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Anbefalt / <em>Recommended</em></p></td>
-</tr>
-</tbody>
-</table>
+<h4 id="_sammensetning_og_kompetanse"><a class="link" href="#_sammensetning_og_kompetanse">Sammensetning og kompetanse</a></h4>
 <div class="paragraph">
-<p>Eksempel i RDF Turtle:</p>
+<p>Grunndatakoordinator-rollen bør bestå av ressurser med kompetanse fra både data- og forretningssiden i offentlig forvaltning. Deltakerne må forstå dataenes rolle i verdiskapende prosesser, hvordan forvaltning av data kan organiseres og hvilke konsekvenser organiseringen har for tilbyder og konsument av data.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;aDataset&gt; a dcat:Dataset ;
-   dcat:distribution &lt;aDistribution&gt; ; .</pre>
+<div class="paragraph">
+<p>Rollen bør bestå av en kontinuerlig kjerne, men tverrsektorielt samarbeid og fagekspertise er hovedfaktorer for at rollen som nasjonal grunndatakoordinator kan fungere. Rollen bør derfor støttes av en koordineringsgruppe bestående av deltakere fra ulike sektorer og fagområder.</p>
 </div>
-</div>
+<div class="paragraph">
+<p>Rollen har sannsynligvis en grenseflate mot roller som kommer fra EU-forordninger, spesielt gjelder det rollen National Competent Body fra Data Governance Act.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Datasett-valgfrie-egenskaper"><a class="anchor" href="#Datasett-valgfrie-egenskaper"></a>3.1.3. Valgfrie egenskaper for klassen <em>Datasett</em></h4>
-<div class="sect4">
-<h5 id="Datasett-iSamsvarMed"><a class="anchor" href="#Datasett-iSamsvarMed"></a>3.1.3.1. Datasett – i samsvar med (dct:conformsTo)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>conforms to</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dct:conformsTo</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://data.norge.no/specification/dcat-ap-no/#Standard" class="ext-link" target="_blank" rel="noopener">dct:Standard &#x29C9;</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til en implementasjonsregel eller annen spesifikasjon, som ligger til grunn for opprettelsen av datasettet.</p>
-<p class="tableblock"><em>This property is used to refer to an implementing rule or other specification.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0..n</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Valgfri / <em>Optional</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Informasjonen som oppgis her bør gjøre det mulig å verifisere om detaljerte krav til den aktuelle kategori av HVD er tilfredsstilt. Se <a href="#Spesifikke_datakrav"> 4.3, &#8220;Spesifikke krav til data i datasett med høy verdi&#8221;</a>.</p>
-<p class="tableblock"><em>The provided information should enable to the verification whether the detailed information requirements by the HVD is satisfied. See <a href="#Spesifikke_datakrav"> 4.3, &#8220;Spesifikke krav til data i datasett med høy verdi&#8221;</a> (in Norwegian only).</em></p></td>
-</tr>
-</tbody>
-</table>
+<h4 id="_samspill_med_andre_aktører"><a class="link" href="#_samspill_med_andre_aktører">Samspill med andre aktører</a></h4>
 <div class="paragraph">
-<p>Eksempel i RDF Turtle:</p>
+<p>Grunndatakoordinatoren fungerer som et bindeledd mellom alle aktørene i rammeverket.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;aDataset&gt; a dcat:Dataset ;
-   dct:conformsTo &lt;https://stirdata.github.io/data-specification&gt; ; .</pre>
-</div>
-</div>
+<div class="paragraph">
+<p>Behovs- og beslutningsunderlagene som grunndatakoordinatoren utarbeider i forbindelse med utvikling av nasjonale grunndata (se del 3), prioriteres videre av [styrende organ] før de omsettes til utvikling.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Datasettserie"><a class="anchor" href="#Datasettserie"></a>3.2. Klassen Datasettserie (dcat:DatasetSeries)</h3>
+<h3 id="_grunndataforvalter"><a class="link" href="#_grunndataforvalter">Grunndataforvalter</a></h3>
 <div class="paragraph">
-<p><a href="#diagram-Klassen-Datasettserie">Figur 3</a> viser klassen Datasettserie og dens egenskaper, samt klassene den refererer til. I figuren er differansen mellom kravene i HVD-DCAT-AP-NO og DCAT-AP-NO markert i gult. Kun kravene som er spesifikke for HVD er videre spesifisert i dette kapittelet. Kravene ellers til <a href="https://data.norge.no/specification/dcat-ap-no/#Datasettserie" class="ext-link" target="_blank" rel="noopener">klassen Datasettserie (dcat:DatasetSeries) i DCAT-AP-NO &#x29C9;</a> gjelder også for denne klassen. Se også <a href="https://data.norge.no/specification/dcat-ap-no/#Om-Datasettserie" class="ext-link" target="_blank" rel="noopener">Om bruk av datasettserie i DCAT-AP-NO &#x29C9;</a>.</p>
+<p>Grunndataforvalteren er virksomheten som forvalter en type grunndata (NAV er eksempelvis grunndataforvalter for arbeidsforholdsdata). Grunndataforvalteren er den aktøren som sitter nærmest dataene og har mest kunnskap om f.eks. dataenes kvalitet, bruk, driftsrutiner og tekniske aspekter.</p>
 </div>
-<div id="diagram-Klassen-Datasettserie" class="imageblock">
-<div class="content">
-<a class="image" href="images/Klassen-Datasettserie.png"><img src="images/Klassen-Datasettserie.png" alt="Tegning med fem klasser og relasjoner mellom dem. Innholdet er forklart i teksten."></a>
-</div>
-<div class="title">Figur 3. Klassen Datasettserie og klassene den refererer til.</div>
-</div>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Dataset series</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dcat:DatasetSerie</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Subklasse av / <em>Subclass of</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Datasett">dcat:Dataset</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Klassen brukes til å representere en samling av datasett som publiseres separat, men som deler noen felles egenskaper som gjør at de er gruppert sammen.</p>
-<p class="tableblock"><em>This class is used to represent a collection of datasets that are published separately, but share some characteristics that group them.</em></p></td>
-</tr>
-</tbody>
-</table>
 <div class="sect3">
-<h4 id="Datasettserie-obligatoriske-egenskaper"><a class="anchor" href="#Datasettserie-obligatoriske-egenskaper"></a>3.2.1. Obligatoriske egenskaper for klassen <em>Datasettserie</em></h4>
-<div class="sect4">
-<h5 id="Datasettserie-gjeldendeLovgivning"><a class="anchor" href="#Datasettserie-gjeldendeLovgivning"></a>3.2.1.1. Datasettserie – gjeldende lovgivning (dcatap:applicableLegislation)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>applicable legislation</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dcatap:applicableLegislation</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://data.norge.no/specification/dcat-ap-no/#RegulativRessurs" class="ext-link" target="_blank" rel="noopener">eli:LegalResource &#x29C9;</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til lovgivningen som gir mandat til opprettelse eller behandling av datasettserien.</p>
-<p class="tableblock"><em>This property is used to refer to the legislation that mandates the creation or management of the dataset series.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1..n</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Obligatorisk / <em>Mandatory</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">For HVD SKAL en av verdiene være <code>http://data.europa.eu/eli/reg_impl/2023/138/oj</code>.</p>
-<p class="tableblock"><em>For HVD the value MUST include the ELI <code>http://data.europa.eu/eli/reg_impl/2023/138/oj</code>.</em></p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Eksempel i RDF Turtle:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;aDatasetSeries&gt; a dcat:DatasetSeries ;
-   dcatap:applicableLegislation &lt;http://data.europa.eu/eli/reg_impl/2023/138/oj&gt; ; .</pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="Datasettserie-hvdKategori"><a class="anchor" href="#Datasettserie-hvdKategori"></a>3.2.1.2. Datasettserie – HVD-kategori (dcatap:hvdCategory)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>HVD category</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dcatap:hvdCategory</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">skos:Concept</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til HVD kategorien som dette datasettserien tilhører.</p>
-<p class="tableblock"><em>This property is used to refer to HVD category to which this dataset series belongs.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1..n</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Obligatorisk / <em>Mandatory</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Verdien SKAL hentes fra EUs kontrollerte vokabular <a href="https://op.europa.eu/en/web/eu-vocabularies/concept-scheme/-/resource?uri=http://data.europa.eu/bna/asd487ae75" class="ext-link" target="_blank" rel="noopener">High-value dataset categories  &#x29C9;</a>.</p>
-<p class="tableblock"><em>The value MUST be chosen from EU&#8217;s controlled vocabulary <a href="https://op.europa.eu/en/web/eu-vocabularies/concept-scheme/-/resource?uri=http://data.europa.eu/bna/asd487ae75" class="ext-link" target="_blank" rel="noopener">High-value dataset categories  &#x29C9;</a>.</em></p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Eksempel i RDF Turtle:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;aDatasetSeries&gt; a dcat:DatasetSeries ;
-   dcatap:hvdCategory &lt;http://data.europa.eu/bna/c_a9135398&gt; ; .</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Datatjeneste"><a class="anchor" href="#Datatjeneste"></a>3.3. Klassen Datatjeneste (dcat:DataService)</h3>
-<div class="paragraph">
-<p><a href="#diagram-Klassen-Datatjeneste">Figur 4</a> viser klassen Datatjeneste og dens egenskaper, samt klassene den refererer til. I figuren er differansen mellom kravene i HVD-DCAT-AP-NO og DCAT-AP-NO markert i gult. Kun kravene som er spesifikke for HVD er videre spesifisert i dette kapittelet. Kravene ellers til <a href="https://data.norge.no/specification/dcat-ap-no/#Datatjeneste" class="ext-link" target="_blank" rel="noopener">klassen Datatjeneste (dcat:DataService) i DCAT-AP-NO &#x29C9;</a> gjelder også for denne klassen.</p>
-</div>
-<div id="diagram-Klassen-Datatjeneste" class="imageblock">
-<div class="content">
-<a class="image" href="images/Klassen-Datatjeneste.png"><img src="images/Klassen-Datatjeneste.png" alt="Tegning med syv klasser og relasjoner mellom dem. Innholdet er forklart i teksten."></a>
-</div>
-<div class="title">Figur 4. Klassen Datatjeneste og klassene den refererer til.</div>
-</div>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Data service</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dcat:DataService</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Subklasse av / <em>Subclass of</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://data.norge.no/specification/dcat-ap-no/#KatalogisertRessurs" class="ext-link" target="_blank" rel="noopener">dcat:Resource &#x29C9;</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Beskrivelse</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Klassen brukes til å representere en datatjeneste, dvs. en samling av operasjoner som gir tilgang til ett eller flere datasett eller databehandlingsfunksjoner.</p>
-<p class="tableblock"><em>This class is used to represent a data service, i.e., a collection of operations that provides access to one or more datasets or data processing functions.</em></p></td>
-</tr>
-</tbody>
-</table>
-<div class="sect3">
-<h4 id="Datatjeneste-obligatoriske-egenskaper"><a class="anchor" href="#Datatjeneste-obligatoriske-egenskaper"></a>3.3.1. Obligatoriske egenskaper for klassen <em>Datatjeneste</em></h4>
-<div class="sect4">
-<h5 id="Datatjeneste-dokumentasjon"><a class="anchor" href="#Datatjeneste-dokumentasjon"></a>3.3.1.1. Datatjeneste – dokumentasjon (foaf:page)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>documentation</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">foaf:page</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">foaf:Document</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til en side eller et dokument som beskriver datatjenesten.</p>
-<p class="tableblock"><em>This property is used to refer to a page or a document that describes the data service.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1..n</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Obligatorisk / <em>Mandatory</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Kvalitet på tjeneste er betraktet som en del av den generiske dokumentasjonen av en datatjeneste.</p>
-<p class="tableblock"><em>Quality of service covers a broad spectrum of aspects. The HVD regulation does not list any mandatory topic. Therefore quality of service information is considered part of the generic documentation of a Data Service.</em></p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Eksempel i RDF Turtle:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;anAPI&gt; a dcat:DataService ;
-   foaf:page &lt;https://data.brreg.no/enhetsregisteret/api/dokumentasjon/&gt; ; .</pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="Datatjeneste-gjeldendeLovgivning"><a class="anchor" href="#Datatjeneste-gjeldendeLovgivning"></a>3.3.1.2. Datatjeneste – gjeldende lovgivning (dcatap:applicableLegislation)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>applicable legislation</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dcatap:applicableLegislation</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://data.norge.no/specification/dcat-ap-no/#RegulativRessurs" class="ext-link" target="_blank" rel="noopener">eli:LegalResource &#x29C9;</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til lovgivningen som gir mandat til opprettelse eller forvaltning av datatjenesten.</p>
-<p class="tableblock"><em>This property is used to refer to the legislation that mandates the creation or management of the data service.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1..n</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Obligatorisk / <em>Mandatory</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">For HVD SKAL en av verdiene være <code>http://data.europa.eu/eli/reg_impl/2023/138/oj</code>.</p>
-<p class="tableblock"><em>For HVD the value MUST include the ELI <code>http://data.europa.eu/eli/reg_impl/2023/138/oj</code>.</em></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect4">
-<h5 id="Datatjeneste-hvdKategori"><a class="anchor" href="#Datatjeneste-hvdKategori"></a>3.3.1.3. Datatjeneste – HVD-kategori (dcatap:hvdCategory)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>HVD category</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dcatap:hvdCategory</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">skos:Concept</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til HVD kategorien som denne datatjeneste tilhører.</p>
-<p class="tableblock"><em>This property is used to refer to HVD category to which this data service belongs.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1..n</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Obligatorisk / <em>Mandatory</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Verdien SKAL hentes fra EUs kontrollerte vokabular <a href="https://op.europa.eu/en/web/eu-vocabularies/concept-scheme/-/resource?uri=http://data.europa.eu/bna/asd487ae75" class="ext-link" target="_blank" rel="noopener">High-value dataset categories  &#x29C9;</a>.</p>
-<p class="tableblock"><em>The value MUST be chosen from EU&#8217;s controlled vocabulary <a href="https://op.europa.eu/en/web/eu-vocabularies/concept-scheme/-/resource?uri=http://data.europa.eu/bna/asd487ae75" class="ext-link" target="_blank" rel="noopener">High-value dataset categories  &#x29C9;</a>.</em></p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Eksempel i RDF Turtle:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;anAPI&gt; a dcat:DataService ;
-   dcatap:hvdCategory &lt;http://data.europa.eu/bna/c_a9135398&gt; ; .</pre>
-</div>
-</div>
+<h4 id="_grunndataforvalters_hovedansvar_og_oppgaver"><a class="link" href="#_grunndataforvalters_hovedansvar_og_oppgaver">Grunndataforvalters hovedansvar og oppgaver</a></h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Imøtekomme krav til dataforvaltning, kvalitet og tilgjengelighet.</p>
+</li>
+<li>
+<p>Sikre at forvaltningen av data følger prinsipper og prosesser som beskrevet i rammeverket.</p>
+</li>
+<li>
+<p>Kontinuerlig identifisere konsumenters behov.</p>
+</li>
+<li>
+<p>Koordinere forvaltningsaktiviteter med andre grunndataforvaltere.</p>
+</li>
+<li>
+<p>Kommunisere utviklingsbehov til grunndatakoordinator.</p>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Datatjeneste-anbefalte-egenskaper"><a class="anchor" href="#Datatjeneste-anbefalte-egenskaper"></a>3.3.2. Anbefalte egenskaper for klassen <em>Datatjeneste</em></h4>
-<div class="sect4">
-<h5 id="Datatjeneste-endepunktsbeskrivelse"><a class="anchor" href="#Datatjeneste-endepunktsbeskrivelse"></a>3.3.2.1. Datatjeneste – endepunktsbeskrivelse (dcat:endpointDescription)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>endpoint description</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dcat:endpointDescription</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">rdfs:Resource</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å oppgi en beskrivelse av tjenestene som er tilgjengelige via endepunktene, inkludert deres operasjoner, parametere osv. Egenskapen gir spesifikke detaljer om de faktiske endepunkt-instansene, mens egenskapen <a href="https://data.norge.no/specification/dcat-ap-no/#Datatjeneste-i-samsvar-med" class="ext-link" target="_blank" rel="noopener">Datatjeneste – i samsvar med (dct:conformsTo) &#x29C9;</a> brukes til å indikere den generelle standarden eller spesifikasjonen som endepunktene implementerer.</p>
-<p class="tableblock"><em>The property is used to provide specific details of the actual endpoint instances, while dct:conformsTo is used to indicate the general standard or specification that the endpoints implement.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0..n</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Anbefalt / <em>Recommended</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Artikkel 3.3 i HVD-forordningen krever API-dokumentasjon i et EU- eller internasjonalt anerkjent og åpent, menneske- og maskinlesbart format.</p>
-<p class="tableblock"><em>Article 3.3 in HVD IR requires to provide API documentation in a Union or internationally recognised open, human-readable and machine-readable format.</em></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect4">
-<h5 id="Datatjeneste-tilgjengeliggjor-datasett"><a class="anchor" href="#Datatjeneste-tilgjengeliggjor-datasett"></a>3.3.2.2. Datatjeneste – tilgjengeliggjør datasett (dcat:servesDataset)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>serves dataset</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dcat:servesDataset</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Datasett">dcat:Dataset</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til datasett som datatjenesten kan distribuere.</p>
-<p class="tableblock"><em>This property is used to refer to a collection of data that this data service can distribute.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0..n</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Anbefalt / <em>Recommended</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Selv om denne egenskapen er anbefalt og ikke obligatorisk, SKAL en datatjeneste i en HVD-katalog brukes til å gi tilgang til HVD-datasett. Se også <a href="#Spesielt_om_distribusjoner_datatjenester"> 4.2, &#8220;Spesielt om distribusjoner og datatjenester for datasett med høy verdi&#8221;</a>.</p>
-<p class="tableblock"><em>Although this property is recommended and not mandatory, a data service that is included in the HVD catalog MUST provide access to at least one HVD marked dataset. See <a href="#Spesielt_om_distribusjoner_datatjenester"> 4.2, &#8220;Spesielt om distribusjoner og datatjenester for datasett med høy verdi&#8221;</a> (in Norwegian only).</em></p></td>
-</tr>
-</tbody>
-</table>
+<h4 id="_sammensetning_og_kompetanse_2"><a class="link" href="#_sammensetning_og_kompetanse_2">Sammensetning og kompetanse</a></h4>
 <div class="paragraph">
-<p>Eksempel i RDF Turtle:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;anAPI&gt; a dcat:DataService ;
-   dcat:servesDataset &lt;aDataset&gt; ; .</pre>
-</div>
-</div>
+<p>Grunndataforvalter velger selv hvordan de rigger seg lokalt for å ivareta grunndataforvalterrollen. Grunndatakoordinator skal ikke engasjere seg i grunndataforvalterens lokale forvaltning og driftsrutiner.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="Datatjeneste-valgfrie-egenskaper"><a class="anchor" href="#Datatjeneste-valgfrie-egenskaper"></a>3.3.3. Valgfrie egenskaper for klassen <em>Datatjeneste</em></h4>
-<div class="sect4">
-<h5 id="Datatjeneste-lisens"><a class="anchor" href="#Datatjeneste-lisens"></a>3.3.3.1. Datatjeneste – lisens (dct:license)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>licence</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dct:license</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dct:LicenseDocument</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til lisensen som datatjenesten blir gjort tilgjengelig under.</p>
-<p class="tableblock"><em>This property is used to refer to a licence under which the data service is made available.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0..1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Valgfri / <em>Optional</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Artikkel 3.3. i HVD-forordningen spesifiserer at brukervilkår bør oppgis. Som beskrevet under <a href="#Spesielt_om_juridisk_info"> 4.1, &#8220;Spesielt om juridisk informasjon om datasett med høy verdi&#8221;</a> kan kravet oppfylles ved å referere til en lisens ved å bruke denne egenskapen. Egenskapen <a href="#Datatjeneste-rettigheter"> 3.3.3.2, &#8220;Datatjeneste – rettigheter (dct:rights)&#8221;</a> kan brukes som et alternativ.</p>
-<p class="tableblock"><em>Article 3.3 in HVD IR specifies that the terms of use should be provided. According to the guidelines under <a href="#Spesielt_om_juridisk_info"> 4.1, &#8220;Spesielt om juridisk informasjon om datasett med høy verdi&#8221;</a> (in Norwegian only) this is fulfilled by referring to a licence using this property. As alternative the property <a href="#Datatjeneste-rettigheter"> 3.3.3.2, &#8220;Datatjeneste – rettigheter (dct:rights)&#8221;</a> can be used.</em></p></td>
-</tr>
-</tbody>
-</table>
+<h4 id="_samspill_med_andre_aktører_2"><a class="link" href="#_samspill_med_andre_aktører_2">Samspill med andre aktører</a></h4>
 <div class="paragraph">
-<p>Eksempel i RDF Turtle:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;anAPI&gt; a dcat:DataService ;
-   dct:license &lt;http://publications.europa.eu/resource/authority/licence/CC_BY_4_0&gt; ; .</pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="Datatjeneste-rettigheter"><a class="anchor" href="#Datatjeneste-rettigheter"></a>3.3.3.2. Datatjeneste – rettigheter (dct:rights)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rights</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dct:rights</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://data.norge.no/specification/dcat-ap-no/#Rettighetserkl%C3%A6ring" class="ext-link" target="_blank" rel="noopener">odrs:RightsStatement &#x29C9;</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til en uttalelse som angir rettigheter knyttet til distribusjonen.</p>
-<p class="tableblock"><em>This property is used to refer to a statement that specifies rights associated with the data service.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0..1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Valgfri / <em>Optional</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Artikkel 2.2. i HVD-forordningen spesifiserer at brukervilkår bør oppgis. Som beskrevet under <a href="#Spesielt_om_juridisk_info"> 4.1, &#8220;Spesielt om juridisk informasjon om datasett med høy verdi&#8221;</a> kan kravet oppfylles ved å bruke egenskapen <a href="#Datatjeneste-lisens"> 3.3.3.1, &#8220;Datatjeneste – lisens (dct:license)&#8221;</a> til å referere til en lisens. Denne egenskapen kan brukes som et alternativ.</p>
-<p class="tableblock"><em>Article 3.3 in HVD IR specifies that the terms of use should be provided. According to the guidelines under <a href="#Spesielt_om_juridisk_info"> 4.1, &#8220;Spesielt om juridisk informasjon om datasett med høy verdi&#8221;</a> (in Norwegian only) this is fulfilled by referring to a licence using the property <a href="#Datatjeneste-lisens"> 3.3.3.1, &#8220;Datatjeneste – lisens (dct:license)&#8221;</a>. This property can be used as an alternative.</em></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Distribusjon"><a class="anchor" href="#Distribusjon"></a>3.4. Klassen Distribusjon (dcat:Distribution)</h3>
-<div class="paragraph">
-<p><a href="#diagram-Klassen-Distribusjon">Figur 5</a> viser klassen Distribusjon og dens egenskaper, samt klassene den refererer til. I figuren er differansen mellom kravene i HVD-DCAT-AP-NO og DCAT-AP-NO markert i gult. Kun kravene som er spesifikke for HVD er videre spesifisert i dette kapittelet. Kravene ellers til <a href="https://data.norge.no/specification/dcat-ap-no/#Distribusjon" class="ext-link" target="_blank" rel="noopener">klassen Distribusjon (dcat:Distribution) i DCAT-AP-NO &#x29C9;</a> gjelder også for denne klassen.</p>
-</div>
-<div id="diagram-Klassen-Distribusjon" class="imageblock">
-<div class="content">
-<a class="image" href="images/Klassen-Distribusjon.png"><img src="images/Klassen-Distribusjon.png" alt="Tegning med fire klasser og relasjoner mellom dem. Innholdet er forklart i teksten."></a>
-</div>
-<div class="title">Figur 5. Klassen Distribusjon og klassene den refererer til.</div>
-</div>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Distribution</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dcat:Distribution</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Klassen brukes til å representere en fysisk representasjon av datasettet i et bestemt format.</p>
-<p class="tableblock"><em>This class is used to represent a distribution, i.e., a physical embodiment of the Dataset in a particular format.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Bulknedlastinger skal beskrives som distribusjon.</p>
-<p class="tableblock"><em>Bulk downloads should be encoded as a Distribution.</em></p></td>
-</tr>
-</tbody>
-</table>
-<div class="sect3">
-<h4 id="Distribusjon-obligatoriske-egenskaper"><a class="anchor" href="#Distribusjon-obligatoriske-egenskaper"></a>3.4.1. Obligatoriske egenskaper for klassen <em>Distribusjon</em></h4>
-<div class="sect4">
-<h5 id="Distribusjon-gjeldendeLovgivning"><a class="anchor" href="#Distribusjon-gjeldendeLovgivning"></a>3.4.1.1. Distribusjon – gjeldende lovgivning (dcatap:applicableLegislation)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>applicable legislation</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dcatap:applicableLegislation</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://data.norge.no/specification/dcat-ap-no/#RegulativRessurs" class="ext-link" target="_blank" rel="noopener">eli:LegalResource &#x29C9;</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til lovgivningen som gir mandat til opprettelse eller forvaltning av distribusjonen.</p>
-<p class="tableblock"><em>This property is used to refer to the legislation that mandates the creation or management of the Distribution.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1..n</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Obligatorisk / <em>Mandatory</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">For HVD SKAL en av verdiene være <code>http://data.europa.eu/eli/reg_impl/2023/138/oj</code>.</p>
-<p class="tableblock"><em>For HVD the value MUST include the ELI <code>http://data.europa.eu/eli/reg_impl/2023/138/oj</code>.</em></p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Eksempel i RDF Turtle:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;aDistribution&gt; a dcat:Distribution ;
-   dcatap:applicableLegislation &lt;http://data.europa.eu/eli/reg_impl/2023/138/oj&gt; ; .</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="Distribusjon-anbefalte-egenskaper"><a class="anchor" href="#Distribusjon-anbefalte-egenskaper"></a>3.4.2. Anbefalte egenskaper for klassen <em>Distribusjon</em></h4>
-<div class="sect4">
-<h5 id="Distribusjon-lisens"><a class="anchor" href="#Distribusjon-lisens"></a>3.4.2.1. Distribusjon – lisens (dct:license)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>licence</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dct:license</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dct:LicenseDocument</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til lisensen som distribusjonen er gjort tilgjengelig under.</p>
-<p class="tableblock"><em>This property is used to refer to a licence under which the Distribution is made available.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0..1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Anbefalt / <em>Recommended</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Artikkel 4.3. i HVD-forordningen spesifiserer at HVD bør gjøres tilgjengelig for viderebruk. Som beskrevet under <a href="#Spesielt_om_juridisk_info"> 4.1, &#8220;Spesielt om juridisk informasjon om datasett med høy verdi&#8221;</a> kan kravet oppfylles ved å referere til en lisens ved å bruke denne egenskapen. Egenskapen <a href="#Distribusjon-rettigheter"> 3.4.3.2, &#8220;Distribusjon – rettigheter (dct:rights)&#8221;</a> kan brukes som et alternativ.</p>
-<p class="tableblock"><em>Article 4.3 specifies that High-value datasets should be made available for reuse. According to the guidelines under <a href="#Spesielt_om_juridisk_info"> 4.1, &#8220;Spesielt om juridisk informasjon om datasett med høy verdi&#8221;</a> (in Norwegian only) this is fulfilled by referring to a licence using this property. As alternative the property <a href="#Distribusjon-rettigheter"> 3.4.3.2, &#8220;Distribusjon – rettigheter (dct:rights)&#8221;</a> can be used.</em></p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Eksempel i RDF Turtle:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;aDistribution&gt; a dcat:Distribution ;
-   dct:license &lt;http://publications.europa.eu/resource/authority/licence/CC_BY_4_0&gt; ; .</pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="Distribusjon-tilganstjeneste"><a class="anchor" href="#Distribusjon-tilganstjeneste"></a>3.4.2.2. Distribusjon – tilgangstjeneste (dcat:accessService)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>access service</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dcat:accessService</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Datatjeneste">dcat:DataService</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til en datatjeneste som gir tilgang til distribusjonen av datasettet.</p>
-<p class="tableblock"><em>This property is used to refer to a data service that gives access to the distribution of the dataset.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0..n</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Anbefalt / <em>Recommended</em></p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Eksempel i RDF Turtle:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;aDistribution&gt; a dcat:Distribution ;
-   dcat:accessService &lt;aDataService&gt; ; .</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="Distribusjon-valgfrie-egenskaper"><a class="anchor" href="#Distribusjon-valgfrie-egenskaper"></a>3.4.3. Valgfrie egenskaper for klassen <em>Distribusjon</em></h4>
-<div class="sect4">
-<h5 id="Distribusjon-i-samsvar-med"><a class="anchor" href="#Distribusjon-i-samsvar-med"></a>3.4.3.1. Distribusjon – i samsvar med (dct:conformsTo)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>linked schemas</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dct:conformsTo</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://data.norge.no/specification/dcat-ap-no/#Standard" class="ext-link" target="_blank" rel="noopener">dct:Standard &#x29C9;</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til et etablert skjema som distribusjonen er i samsvar med.</p>
-<p class="tableblock"><em>This property is used to refer to an established schema to which the described Distribution conforms.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0..n</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Valgfri / <em>Optional</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Informasjonen som oppgis her bør gjøre det mulig å verifisere om detaljerte krav til den aktuelle kategori av HVD er tilfredsstilt. Se <a href="#Spesifikke_datakrav"> 4.3, &#8220;Spesifikke krav til data i datasett med høy verdi&#8221;</a>.</p>
-<p class="tableblock"><em>The provided information should enable to the verification whether the detailed information requirements by the HVD is satisfied. See <a href="#Spesifikke_datakrav"> 4.3, &#8220;Spesifikke krav til data i datasett med høy verdi&#8221;</a> (in Norwegian only).</em></p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Eksempel i RDF Turtle:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>&lt;aDistribution&gt; a dcat:Distribution ;
-   dct:conformsTo &lt;https://stirdata.github.io/data-specification&gt; ; .</pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="Distribusjon-rettigheter"><a class="anchor" href="#Distribusjon-rettigheter"></a>3.4.3.2. Distribusjon – rettigheter (dct:rights)</h5>
-<table class="tableblock frame-all grid-all stripes-even stretch">
-<colgroup>
-<col style="width: 30%;">
-<col style="width: 70%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong><em>English name</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rights</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>URI</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">dct:rights</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Verdiområde / <em>Range</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://data.norge.no/specification/dcat-ap-no/#Rettighetserkl%C3%A6ring" class="ext-link" target="_blank" rel="noopener">odrs:RightsStatement &#x29C9;</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Anvendelse / <em>Usage note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Egenskapen brukes til å referere til en uttalelse som angir rettigheter knyttet til distribusjonen.</p>
-<p class="tableblock"><em>This property is used to refer to a statement that specifies rights associated with the Distribution.</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Multiplisitet / <em>Multiplicity</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">0..1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Kravnivå / <em>Requirement level</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Valgfri / <em>Optional</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Merknad / <em>Note</em></strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Artikkel 4.3. i HVD-forordningen spesifiserer at HVD bør gjøres tilgjengelig for viderebruk. Som beskrevet under <a href="#Spesielt_om_juridisk_info"> 4.1, &#8220;Spesielt om juridisk informasjon om datasett med høy verdi&#8221;</a> kan kravet oppfylles ved å bruke egenskapen <a href="#Distribusjon-lisens"> 3.4.2.1, &#8220;Distribusjon – lisens (dct:license)&#8221;</a> til å referere til en lisens. Denne egenskapen kan brukes som et alternativ.</p>
-<p class="tableblock"><em>Article 4.3 specifies that High-value datasets should be made available for reuse. According to the guidelines under <a href="#Spesielt_om_juridisk_info"> 4.1, &#8220;Spesielt om juridisk informasjon om datasett med høy verdi&#8221;</a> (in Norwegian only) this is fulfilled by referring to a licence using the property <a href="#Distribusjon-lisens"> 3.4.2.1, &#8220;Distribusjon – lisens (dct:license)&#8221;</a>. This property can be used as an alternative.</em></p></td>
-</tr>
-</tbody>
-</table>
+<p>Grunndataforvalter må ha en tett samhandling med grunndatakoordinator og det styrende organet.</p>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Spesielle_temaer"><a class="anchor" href="#Spesielle_temaer"></a>4. Noen spesielle temaer</h2>
+<h2 id="_del_2_kriterier_og_prinsipper_for_nasjonale_grunndata"><a class="link" href="#_del_2_kriterier_og_prinsipper_for_nasjonale_grunndata">Del 2: Kriterier og prinsipper for nasjonale grunndata</a></h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="Spesielt_om_juridisk_info"><a class="anchor" href="#Spesielt_om_juridisk_info"></a>4.1. Spesielt om juridisk informasjon om datasett med høy verdi</h3>
 <div class="paragraph">
-<p>HVD-forordningen krever høy metadatakvalitet for juridisk informasjon om datasett med høy verdi. Informasjonen bør være i både maskin- og menneskelesbart format, dessuten med en varig lenke.</p>
+<p>Dette kapitlet fastsetter, på overordnet nivå, kriteriene og prinsippene som er førende for de nasjonale grunndataene, deres tilbydere og konsumenter.</p>
 </div>
 <div class="paragraph">
-<p>Vi anbefaler sterkt at datasettutgiverne bruker en av lisensene fra <a href="https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/licence" class="ext-link" target="_blank" rel="noopener">EUs kontrollerte vokabular for lisens &#x29C9;</a>, f.eks. CC BY 4.0 ved å bruke den varige lenken <code>http://publications.europa.eu/resource/authority/licence/CC_BY_4_0</code>. Regjeringens <a href="https://www.regjeringen.no/no/dokumenter/retningslinjer-ved-tilgjengeliggjoring-av-offentlige-data/id2536870/" class="ext-link" target="_blank" rel="noopener">retningslinjer ved tilgjengeliggjøring av offentlige data  &#x29C9;</a>, under punkt 1 Bruk åpne standardlisenser, anbefaler også å bruke CC BY 4.0.</p>
-</div>
-<div class="paragraph">
-<p>For datasettutgivere som mot formodning ikke kan bruke en av lisensene fra ovennevnte EUs kontrollerte vokabular for lisens, se <a href="https://semiceu.github.io/uri.semic.eu-generated/DCAT-AP/releases/3.0.0-hvd/#c3" class="ext-link" target="_blank" rel="noopener"><em>Legal information</em> &#x29C9;</a> i EUs DCAT-AP HVD.</p>
-</div>
+<p>Dette er en viktig del av rammeverk som har som formål å sikre at visjonen om tilstrekkelig kvalitet og enkel tilgang på nasjonale grunndata oppnås.</p>
 </div>
 <div class="sect2">
-<h3 id="Spesielt_om_distribusjoner_datatjenester"><a class="anchor" href="#Spesielt_om_distribusjoner_datatjenester"></a>4.2. Spesielt om distribusjoner og datatjenester for datasett med høy verdi</h3>
+<h3 id="_kriterier_for_nasjonale_grunndata"><a class="link" href="#_kriterier_for_nasjonale_grunndata">Kriterier for nasjonale grunndata</a></h3>
 <div class="paragraph">
-<p>HVD-forordningen krever at datasett med høy verdi skal være tilgjengelig.</p>
+<p>Kriterier for nasjonale grunndata har til hensikt å presisere hva Nasjonale grunndata er, hva som kjennetegner dem og hvor skillet mellom grunndata og «andre» data går. Dette er for å sikre at rammeverket konsentrerer seg om de viktigste dataene. Kriteriene illustrerer både de iboende egenskapene som kjennetegner Nasjonale grunndata samt forventingene som stilles til disse dataene.</p>
 </div>
 <div class="paragraph">
-<p>Forordningen setter dessuten eksplisitte krav til om et HVD skal være tilgjengelig som bulknedlasting og/eller via API, avhengig av kategorien datasettet tilhører:</p>
+<p>Kriteriene er et sentralt verktøy for blant andre grunndatakoordinatoren i å sørge for at de «riktige» dataene tas inn i grunndataoversikten. Kriteriene brukes i en første vurdering for å identifisere kandidater til nasjonale grunndata.</p>
 </div>
+<div class="paragraph">
+<p>Grunndataforvalter kan bruke kriteriene til å identifisere hvilke data som kan være nasjonale grunndata og utvikle/utbedre grunndata.</p>
+</div>
+<div class="sect3">
+<h4 id="_kriterier"><a class="link" href="#_kriterier">Kriterier</a></h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Andre aktører er avhengige av dataene for å løse sitt samfunnsoppdrag</p>
+</li>
+<li>
+<p>Gir verdi på tvers av sektorer</p>
+</li>
+<li>
+<p>Dataene dekker et behov for mange konsumenter</p>
+</li>
+<li>
+<p>Dataene er en autoritativ kilde som innebærer at de svarer ut et av fire krav nedenfor:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>både via API og som bulknedlasting, f.eks. geodata (jf. Annex 1.2 i forordningen)</p>
+<p>Eksisterer regelverk som pålegger aktører å benytte disse dataene</p>
 </li>
 <li>
-<p>bare via API, f.eks. "NWP model data" i kategori meteorologiske data (jf. Annex 3.2 i forordningen)</p>
+<p>Er eneste eksisterende kilde</p>
 </li>
 <li>
-<p>enten via API eller som bulknedlasting, f.eks. historiske versjoner av data for jordobservasjon og vær (jf. Annex 2.2 i forordningen)</p>
+<p>Data som brukere anser at bør være autoritativ kilde</p>
 </li>
-</ul>
-</div>
-<div id="diagram-datasett-distribusjon-datatjeneste" class="imageblock">
-<div class="content">
-<a class="image" href="images/datasett-distribusjon-datatjeneste.png"><img src="images/datasett-distribusjon-datatjeneste.png" alt="Tegning med tre klasser og relasjoner mellom dem. Innholdet er forklart i teksten."></a>
-</div>
-<div class="title">Figur 6. Datasett, Distribusjon og Datatjeneste.</div>
-</div>
-<div class="paragraph">
-<p><a href="#diagram-datasett-distribusjon-datatjeneste">Figur 6</a> illustrerer hvordan bulknedlastinger og API-tilgang skal beskrives:</p>
-</div>
-<div class="ulist">
-<ul>
 <li>
-<p>Bulknedlastinger skal beskrives som <strong>distribusjon</strong>er, ved å bruke egenskapen <a href="#Datasett-datasettdistribusjon"> 3.1.2.1, &#8220;Datasett – datasettdistribusjon (dcat:distribution)&#8221;</a> fra datasettbeskrivelsen.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>En bulknedlasting kan gjøres tilgjengelig via API, ved å bruke egenskapen <a href="https://data.norge.no/specification/dcat-ap-no/#Distribusjon-tilgangstjeneste" class="ext-link" target="_blank" rel="noopener">Distribusjon – tilgangstjeneste (dcat:accessService) &#x29C9;</a> fra distribusjonsbeskrivelsen.</p>
+<p>Finnes flere kilder, men disse dataene har bedre kvalitet/større brukergruppe</p>
 </li>
 </ul>
 </div>
 </li>
-<li>
-<p>API-tilgang beskrives ved at det i beskrivelsen av det aktuelle APIet (<strong>datatjenesten</strong>) refereres til datasettet ved å bruke egenskapen <a href="#Datatjeneste-tilgjengeliggjor-datasett"> 3.3.2.2, &#8220;Datatjeneste – tilgjengeliggjør datasett (dcat:servesDataset)&#8221;</a>.</p>
-</li>
-</ul>
+</ol>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="Spesifikke_datakrav"><a class="anchor" href="#Spesifikke_datakrav"></a>4.3. Spesifikke krav til data i datasett med høy verdi</h3>
+<h3 id="_prinsipper"><a class="link" href="#_prinsipper">Prinsipper</a></h3>
 <div class="paragraph">
-<p><em>Dette er en forkortet og fornorsket versjon av EUs <a href="https://semiceu.github.io/DCAT-AP/releases/2.2.0-hvd/#c7" class="ext-link" target="_blank" rel="noopener">Specific data requirements &#x29C9;</a> i DCAT-AP HVD.</em></p>
-</div>
-<div class="paragraph">
-<p>Vedlegg til HVD-forordningen inneholder krav til hvilke dataelementer (<em>key attributes</em>) som skal være med i et datasett med høy verdi. Ethvert datasett med høy verdi skal være i henhold til kravene i HVD-forordningen.</p>
+<p>Rammeverket for Nasjonale grunndata følger de overordnede arkitekturprinsipper for digitalisering av offentlig sektor i henhold til Digitaliseringsrundskrivets punkt 1.11; <em>Følg krav om arkitektur og standarder</em>. Dette innebærer at man bruker samme form, og beskriver hovedprinsipper med konkrete anbefaleringer til etterlevelse av prinsippene. De overordnede arkitekturprinsippene har formen navn, forklaring, begrunnelse, anbefalinger, veiledning og ressurser.</p>
 </div>
 <div class="paragraph">
-<p>For å dokumentere at kravene er oppfylt, anbefales det å bruke egenskapen <code>dct:conformsTo</code> til å referere til et allment tilgjengelig dokument (f.eks. en datastandard/dataspesifikasjon) som beskriver den indre strukturen av datasettet (eller distribusjonen).</p>
+<p>Prinsippene for Nasjonale grunndata supplerer de overordnede arkitekturprinsippene og kobles særlig til <em>prinsipp fire om deling og gjenbruk av data</em>, se oversikt over de overordnede arkitekturprinsippene i tabellen nedenfor.</p>
 </div>
-<div class="paragraph">
-<p>En alternativ tilnærming er selvdeklarasjon (<em>self declaration of conformance</em>), der datasettutgiveren selv deklarerer at datasettet oppfyller alle de tekniske datakravene i HVD-forordningen. Hverken EUs DCAT-AP HVD eller den norske HVD-DCAT-AP-NO foreslår noen generelle selvdeklarasjonserklæringer.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="URIer-i-bruk"><a class="anchor" href="#URIer-i-bruk"></a>Vedlegg A - Navnerom som brukes i standarden</h2>
-<div class="sectionbody">
-<table class="tableblock frame-all grid-all stripes-even stretch">
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Overordnede arkitekturprinsipper</caption>
 <colgroup>
 <col style="width: 10%;">
-<col style="width: 45%;">
-<col style="width: 45%;">
+<col style="width: 30%;">
+<col style="width: 60%;">
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Nr.</th>
+<th class="tableblock halign-left valign-top">Prinsipp</th>
+<th class="tableblock halign-left valign-top">Kobling til nasjonale grunndata</th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Prefiks</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Navnerom</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>RDF-vokabular</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ta utgangspunkt i brukernes behov</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hvilke data som får status som nasjonale grunndata skal være basert på brukerbehov. Nasjonale grunndata er data som er særlig viktig for samfunnet og mange har behov for.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>dcat</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http://www.w3.org/ns/dcat#</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.w3.org/TR/vocab-dcat-3/" class="ext-link" target="_blank" rel="noopener">Data Catalog Vocabulary &#x29C9;</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ta arkitekturbeslutninger på rett nivå</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For nasjonale grunndata er det spesifisert forskjellige roller som har forskjellig ansvar. Grunndataforvalter og nasjonal grunndatakoordinator</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>dcatap</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http://data.europa.eu/r5r/</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://joinup.ec.europa.eu/collection/semic-support-centre/dcat-ap" class="ext-link" target="_blank" rel="noopener">DCAT Application Profile &#x29C9;</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bidra til digitaliseringsvennlige regelverk</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arbeidet med nasjonale grunndata vil bidra til å identifisere juridiske barrierer for samhandling og digitalisering, og bidra til å kunne igangsette lov- og forskriftsendringer</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>dct</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http://purl.org/dc/terms/</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/" class="ext-link" target="_blank" rel="noopener">DCMI Metadata Terms &#x29C9;</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Del og gjenbruk data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nasjonale grunndata vil bidra til at det blir enklere å dele og gjenbruke data</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>eli</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http://data.europa.eu/eli/ontology#</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://eur-lex.europa.eu/eli-register/about.html" class="ext-link" target="_blank" rel="noopener">European Legislation Identifier &#x29C9;</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Del og gjenbruk løsninger</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nasjonale grunndata vil blant annet bidra til økt standardisering, gjenbruk av informasjonsmodeller, samarbeid rundt begrepsarbeid osv.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>foaf</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http://xmlns.com/foaf/0.1/</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://xmlns.com/foaf/spec/" class="ext-link" target="_blank" rel="noopener">FOAF Vocabulary &#x29C9;</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lag digitale løsninger som støtter samhandling</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rammeverket for nasjonale grunndata vil bidra til juridisk, organisatorisk, semantisk og teknisk samhandlingsevne. Dette innebærer blant annet standardisering, avtaler og felles begrepsapparat.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>odrs</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http://schema.theodi.org/odrs#</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://schema.theodi.org/odrs/" class="ext-link" target="_blank" rel="noopener">Open Data Rights Statement Vocabulary &#x29C9;</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>rdfs</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http://www.w3.org/2000/01/rdf-schema#</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.w3.org/TR/rdf-schema/" class="ext-link" target="_blank" rel="noopener">RDF Vocabulary Description Language 1.0: RDF Schema &#x29C9;</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>skos</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">http://www.w3.org/2004/02/skos/core#</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.w3.org/TR/skos-reference/" class="ext-link" target="_blank" rel="noopener">SKOS Simple Knowledge Organization System &#x29C9;</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sørg for tillit til oppgaveløsningen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rammeverk for nasjonale grunndata kan bidra til etterlevelse av regelverket og ivareta krav til rettssikkerhet, effektivitet, informasjonssikkerhet og personvern.</p></td>
 </tr>
 </tbody>
 </table>
+<div class="sect3">
+<h4 id="_dataforvaltning"><a class="link" href="#_dataforvaltning">Dataforvaltning</a></h4>
 <div class="paragraph">
-<p>Eksempel i RDF Turtle:</p>
+<p>Nasjonale grunndata skal ha en kvalitet som sikrer at de er pålitelige, relevante og egnet til å dekke brukernes behov. Dataenes bruksverdi, integritet og forvaltning skal ivaretas, slik at de reflekterer faktiske forhold.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre>@prefix dcat: &lt;http://www.w3.org/ns/dcat#&gt; .
-@prefix dcatap: &lt;http://data.europa.eu/r5r/&gt; .
-@prefix dct: &lt;http://purl.org/dc/terms/&gt; .
-@prefix eli: &lt;http://data.europa.eu/eli/ontology#&gt; .
-@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
-@prefix odrs: &lt;http://schema.theodi.org/odrs#&gt; .
-@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
-@prefix skos: &lt;http://www.w3.org/2004/02/skos/core#&gt; .</pre>
+<div class="sect4">
+<h5 id="_anbefalinger_til_etterlevelse"><a class="link" href="#_anbefalinger_til_etterlevelse">Anbefalinger til etterlevelse:</a></h5>
+<div class="paragraph">
+<p>Sørg for at Nasjonale grunndata følger fastsatte krav og prosesser i rammeverket for Nasjonale grunndata:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Nasjonale grunndata skal ha et avklart forvaltningsansvar slik at ansvar for datakvalitet er plassert</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Dette gjelder utforming, etablering og forvaltning av nasjonale grunndata, både med hensyn til forutsetninger, ansvarsforhold, risikofaktorer og ressursbruk.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Nasjonale grunndata skal ha tilstrekkelig kvalitet til å dekke et nasjonalt behov (konsumenters behov på tvers av sektorer)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Det må være tydelig og forståelig hvilke krav som stilles til kilden for opplysninger, og hvem som har ansvar for å gi hvilke bidrag til sikring av kvalitet og troverdighet.</p>
+</li>
+<li>
+<p>Etablere tilbakemeldingssløyfer og rutiner for hvordan man opprettholder kvalitet på data.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_datadeling_og_sammenstilling"><a class="link" href="#_datadeling_og_sammenstilling">Datadeling og -sammenstilling</a></h4>
+<div class="paragraph">
+<p>Nasjonale grunndata deles med de som har rettighet til det. Dataenes livssyklus, anvendbarhet og «kombinerbarhet» må sikres. Dataene skal kunne benyttes i ulik brukskontekst, saksbehandling, livshendelser eller situasjonsforståelse.</p>
+</div>
+<div class="sect4">
+<h5 id="_anbefalinger_til_etterlevelse_2"><a class="link" href="#_anbefalinger_til_etterlevelse_2">Anbefalinger til etterlevelse:</a></h5>
+<div class="paragraph">
+<p>Sørg for at Nasjonale grunndata er innrettet for flerbruk og kan anvendes effektivt og enkelt:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Nasjonale grunndata skal forvaltes og tilgjengeliggjøres slik at konsumenter ikke har behov for å samle inn dataene inn på nytt</p>
+</li>
+<li>
+<p>Nasjonale grunndata skal baseres på FAIR-prinsippene</p>
+</li>
+<li>
+<p>Nasjonale grunndata skal kunne kombineres med andre data. Det er gjennom sammenstilling dataene gir høy verdi på tvers og skaper stor samfunnsnytte</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Endringslogg"><a class="anchor" href="#Endringslogg"></a>Endringslogg</h2>
+<h2 id="_del_3_prosesser"><a class="link" href="#_del_3_prosesser">Del 3: Prosesser</a></h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="Endringer-v1-0-x"><a class="anchor" href="#Endringer-v1-0-x"></a>Endringer fra v.1.0.0 til 1.0.x</h3>
 <div class="paragraph">
-<p>Kun redaksjonelle justeringer:</p>
+<p>I 2025 er de nasjonale grunndataene som finnes i norsk offentlig forvaltning ikke er definert. Rammeverkets prosesser vil derfor de neste årene konsentrere seg rundt følgende aktiviteter:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>fra v.1.0.0 til 1.0.1: lagt inn alternativ tekst til figurene</p>
+<p>Identifisere nasjonale grunndata-kandidater</p>
+</li>
+<li>
+<p>Igangsette forbedringstiltak slik at dataene innfrir krav til tilstrekkelig kvalitet, kombinerbarhet og tilgjengelighet</p>
+</li>
+<li>
+<p>Sørge for å oppnå kun én gang-prinsippet for de grunndataene som fortløpende inngår i grunndataoversikten (dvs. at Innbyggere og virksomheter oppgir opplysninger til det offentlige kun én gang, til kun én offentlig aktør, og at konsumenter er forpliktet til å hente dataene hos den ene kilden).</p>
 </li>
 </ul>
 </div>
-<!-- Site Improve Analytics -->
-<script async src="https://siteimproveanalytics.com/js/siteanalyze_6255470.js"></script>
-<!-- End Site Improve Analytics -->
+<div class="paragraph">
+<p>På sikt, ettersom grunndataoversikten fylles med innhold, vil kontinuerlig forvaltning av grunndataene på nasjonalt nivå utgjøre en større del av rammeverkets prosesser.</p>
+</div>
+<div class="sect2">
+<h3 id="_utviklingsfaser_for_nasjonale_grunndata"><a class="link" href="#_utviklingsfaser_for_nasjonale_grunndata">Utviklingsfaser for nasjonale grunndata</a></h3>
+<div class="paragraph">
+<p>Dette kapittelet skisserer prosessene for hvordan aktiviteten beskrevet punktvis ovenfor skal utføres. Prosessen er inndelt i fire utviklingsfaser.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/NG_utviklingsfaser.png" alt="NG utviklingsfaser">
+</div>
+<div class="title">Figure 2. Utviklingsfaser for nasjonale grunndata</div>
+</div>
+<div class="paragraph">
+<p>Illustrasjonen over viser utviklingsfasene som en firetrinnsprosess, hvorav de tre første er planprosesser og den fjerde er drift og forvaltning. Formålet med utviklingsfasene er å identifisere nasjonale grunndata-kandidater, vurdere nytteverdien av å innlemme dem som nasjonale grunndata, hva som må til for at de skal innfri krav til kvalitet og tilgjengelighet og hvordan de skal driftes av grunndataforvalter.</p>
+</div>
+<div class="sect3">
+<h4 id="_fase_1_behov"><a class="link" href="#_fase_1_behov">Fase 1: Behov</a></h4>
+<div class="paragraph">
+<p>I forkant av fase 1 er enten et behov for nasjonale grunndata eller en mulig kandidat for nasjonale grunndata identifisert og meldt inn til grunndatakoordinator. Formålet med fase 1 er å vurdere og dokumentere potensialet til kandidaten eller hvordan et innmeld databehov kan ivaretas av nasjonale grunndata. Dataenes forvaltnings- og forretningsbehov blir identifisert og vurdert opp mot kriteriene (beskrevet i del 1).</p>
+</div>
+<div class="paragraph">
+<p>Grunndatakoordinatoren har ansvar for å utarbeide kunnskaps- og beslutningsgrunnlaget. Dette, brukes til å avgrense hvilke data det er snakk om, og hva som skal oppnås med å gi dem status som nasjonale grunndata. Det svarer ut hvem som har nytte av dataene, hva som er antatte gevinster og hva som kreves for å forvalte dataene som nasjonale grunndata.</p>
+</div>
+<div class="paragraph">
+<p>Et godt kunnskapsgrunnlag danner utgangspunktet for videre utforskning i fase 2.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_fase_2_vurder_effekt_avgrens_og_planlegg"><a class="link" href="#_fase_2_vurder_effekt_avgrens_og_planlegg">Fase 2: Vurder effekt, avgrens og planlegg</a></h4>
+<div class="paragraph">
+<p>Er potensialet til kandidaten vurdert som tilstrekkelig i fase 1, brukes fase 2 på å vurdere effekten av dataene i et kost/nytte-perspektiv. I fase 2 skal et fullverdig beslutningsgrunnlag foreligge. Beslutningsgrunnlaget, skal inneholde en grovestimering av innsatsen som må til for å realisere potensialet som er beskrevet. Juridiske og organisatoriske realiseringskrav må også beskrives. Forslag til hvem som blir grunndataforvalter inkluderes. Fase 2 utgjør grunnlaget for å iverksette konkrete endringer.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_fase_3_beslutt_rammer"><a class="link" href="#_fase_3_beslutt_rammer">Fase 3: Beslutt rammer</a></h4>
+<div class="paragraph">
+<p>I fase 3 skal konkrete utviklingstiltak og plan for operasjonalisering formes slik at de aktuelle grunndataene tilfredsstiller fastsatte krav og prosesser i rammeverket. Tiltak og plan må dokumenteres og forankres med grunndatakoordinator og styrende organ. De økonomiske, juridiske og organisatoriske rammene må avklares, og tildeling av rollen som nasjonal grunndataforvalter besluttes formelt av styrende organ.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_fase_4_løpende_forvaltning_og_drift"><a class="link" href="#_fase_4_løpende_forvaltning_og_drift">Fase 4: Løpende forvaltning og drift</a></h4>
+<div class="paragraph">
+<p>I fase 4 er de konkrete tiltakene fra fase 3 iverksatt og må opprettholdes. De involverte aktørene sørger for at ordningen øker sin verdi ved å tilpasse den nye juridiske og organisatoriske krav som måtte komme, f.eks. nye krav til datakvalitet og nye aktørers behov. Løpende forvaltning og drift må også holde tritt med teknologiutviklingen. Finansiering av drift må kontinuerlig sikres over budsjett og tildelingsbrev.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Sist oppdatert 2025-02-28 05:45:33 UTC
+Version 1.0<br>
+Last updated 2025-10-15 13:24:04 UTC
 </div>
 </div>
 </body>
