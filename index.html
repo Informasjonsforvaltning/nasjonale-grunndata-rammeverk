@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.24">
-<meta name="author" content="Arbeidsgruppen for nasjonale grunndata +">
+<meta name="author" content="Arbeidsgruppen for nasjonale grunndata i Digdir">
 <title>Rammeverk for Nasjonale grunndata</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -434,35 +434,215 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- this docinfo contains several modifications to the default asciidoc-CSS -->
+
+<!-- 1) Generate a collapsible TOC -->
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tocify/1.9.0/javascripts/jquery.tocify.min.js"></script>
+<!-- We do not need the tocify CSS because the asciidoc CSS already provides most of what we need -->
+
+<style>
+.tocify-header {
+    font-style: italic;
+}
+
+.tocify-subheader {
+    font-style: normal;
+    font-size: 90%;
+}
+
+.tocify ul {
+    margin: 0;
+ }
+</style>
+
+<script type="text/javascript">
+    $(function () {
+        // Add a new container for the tocify toc into the existing toc so we can re-use its
+        // styling
+        $("#toc").append("<div id='generated-toc'></div>");
+        $("#generated-toc").tocify({
+            extendPage: true,
+            context: "#content",
+            highlightOnScroll: true,
+            hideEffect: "slideUp",
+            // Use the IDs that asciidoc already provides so that TOC links and intra-document
+            // links are the same. Anything else might confuse users when they create bookmarks.
+            hashGenerator: function(text, element) {
+                return $(element).attr("id");
+            },
+            // Smooth scrolling doesn't work properly if we use the asciidoc IDs
+            smoothScroll: false,
+            // Set to 'none' to use the tocify classes
+            theme: "none",
+            // Handle book (may contain h1) and article (only h2 deeper)
+            selectors: $( "#content" ).has( "h1" ).size() > 0 ? "h1,h2,h3,h4,h5" : "h2,h3,h4,h5",
+            ignoreSelector: ".discrete"
+        });
+
+        // Make TOC items focusable
+        $("#generated-toc").find("a").attr("tabindex", "0");
+        // Make TOC items focusable
+        $("#generated-toc").find("a").attr("tabindex", "0");
+        // Collapse TOC initially, showing only level 1 headings
+        $("#generated-toc").find(".tocify-subheader").hide();
+        $("#generated-toc").find(".tocify-header").addClass("collapsed");
+        // Toggle collapse on click
+        $("#generated-toc").on("click", ".tocify-header", function() {
+          $(this).nextUntil(".tocify-header").toggle();
+          $(this).toggleClass("collapsed");
+        });
+
+/*
+        // Make TOC items focusable
+        toc.find("a").attr("tabindex", "0");
+
+        // Collapse TOC initially, showing only level 1 headings
+        toc.find(".tocify-subheader").hide();
+        toc.find(".tocify-header").addClass("collapsed");
+
+        // Toggle collapse on click
+        toc.on("click", ".tocify-header", function() {
+          $(this).nextUntil(".tocify-header").toggle();
+          $(this).toggleClass("collapsed");
+        });
+*/
+        // Switch between static asciidoc toc and dynamic tocify toc based on browser size
+        // This is set to match the media selectors in the asciidoc CSS
+        // Without this, we keep the dynamic toc even if it is moved from the side to preamble
+        // position which will cause odd scrolling behavior
+        var handleTocOnResize = function() {
+            if ($(document).width() < 768) {
+                $("#generated-toc").hide();
+                $(".sectlevel0").show();
+                $(".sectlevel1").show();
+            }
+            else {
+                $("#generated-toc").show();
+                $(".sectlevel0").hide();
+                $(".sectlevel1").hide();
+            }
+        }
+
+        $(window).resize(handleTocOnResize);
+        handleTocOnResize();
+    });
+</script>
+
+
+<!-- 2) To make collapsible blocks outlined when focused -->
+
+<style>
+    /* Add outline to the summary element when focused */
+    details summary:focus {
+        outline: thin dotted; /* Adjust thickness and color as needed */
+        outline-offset: -2px; /* Adjust the offset to fit the text width */
+        display: inline-block; /* Ensure the element is inline-block */
+        width: auto /* Ensure the width is auto to fit the text */
+    }
+</style>
+
+<script>
+    // Add focus and blur event listeners to the summary element
+    document.querySelectorAll('details summary').forEach(el => {
+        el.setAttribute('tabindex', '0'); // Make it focusable
+        el.addEventListener('focus', () => {
+            el.classList.add('focus-outline'); // Add the outline class on focus
+        });
+        el.addEventListener('blur', () => {
+            el.classList.remove('focus-outline'); // Remove the outline class on blur
+        });
+    });
+</script>
 </head>
-<body class="article">
+<body class="book toc2 toc-left">
 <div id="header">
 <h1>Rammeverk for Nasjonale grunndata</h1>
 <div class="details">
-<span id="author" class="author">Arbeidsgruppen for nasjonale grunndata +</span><br>
-<span id="revdate">Digitaliseringsdirektoratet (Digdir) / The Norwegian Digitalisation Agency</span>
+<span id="author" class="author">Arbeidsgruppen for nasjonale grunndata i Digdir</span><br>
+<span id="revnumber">versjon 1.0,</span>
+<span id="revdate">15. oktober 2025</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Innhold</div>
+<ul class="sectlevel1">
+<li><a href="#_innledning_hva_er_nasjonale_grunndata_og_hvorfor_er_det_behov_for_et_rammeverk">Innledning: Hva er Nasjonale grunndata og hvorfor er det behov for et rammeverk</a>
+<ul class="sectlevel2">
+<li><a href="#_kun_én_gang">Kun én gang</a></li>
+<li><a href="#_nasjonale_grunndata">Nasjonale grunndata</a></li>
+<li><a href="#_et_rammeverk_sørger_for_kvalitet_og_tilgang_på_nasjonale_grunndata">Et rammeverk sørger for kvalitet og tilgang på nasjonale grunndata</a></li>
+<li><a href="#_på_lag_med_dagens_styring">På lag med dagens styring</a></li>
+</ul>
+</li>
+<li><a href="#_del_1_organisering_roller_og_aktører">Del 1: Organisering, roller og aktører</a>
+<ul class="sectlevel2">
+<li><a href="#_styrende_organ">Styrende organ</a></li>
+<li><a href="#_nasjonal_grunndatakoordinator_grunndatakoordinator">Nasjonal grunndatakoordinator (grunndatakoordinator)</a>
+<ul class="sectlevel3">
+<li><a href="#_grunndatakoordinatorens_hovedansvar_og_oppgaver">Grunndatakoordinatorens hovedansvar og oppgaver</a>
+<ul class="sectlevel4">
+<li><a href="#_1_ansvarlig_for_rammeverket">1. Ansvarlig for rammeverket:</a></li>
+<li><a href="#_2_ansvarlig_for_nasjonal_grunndataoversikt">2. Ansvarlig for nasjonal grunndataoversikt:</a></li>
+<li><a href="#_3_ansvarlig_for_å_holde_oversikt_over_og_dokumentere_behov_for_nasjonale_grunndata_i_forvaltningen">3. Ansvarlig for å holde oversikt over og dokumentere behov for Nasjonale grunndata i forvaltningen:</a></li>
+<li><a href="#_4_ansvarlig_for_å_koordinere_og_fasilitere_utviklingen_av_nasjonale_grunndata">4. Ansvarlig for å koordinere og fasilitere utviklingen av Nasjonale grunndata:</a></li>
+</ul>
+</li>
+<li><a href="#_sammensetning_og_kompetanse">Sammensetning og kompetanse</a></li>
+<li><a href="#_samspill_med_andre_aktører">Samspill med andre aktører</a></li>
+</ul>
+</li>
+<li><a href="#_grunndataforvalter">Grunndataforvalter</a>
+<ul class="sectlevel3">
+<li><a href="#_grunndataforvalters_hovedansvar_og_oppgaver">Grunndataforvalters hovedansvar og oppgaver</a></li>
+<li><a href="#_sammensetning_og_kompetanse_2">Sammensetning og kompetanse</a></li>
+<li><a href="#_samspill_med_andre_aktører_2">Samspill med andre aktører</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_del_2_kriterier_og_prinsipper_for_nasjonale_grunndata">Del 2: Kriterier og prinsipper for nasjonale grunndata</a>
+<ul class="sectlevel2">
+<li><a href="#_kriterier_for_nasjonale_grunndata">Kriterier for nasjonale grunndata</a>
+<ul class="sectlevel3">
+<li><a href="#_kriterier">Kriterier</a></li>
+</ul>
+</li>
+<li><a href="#_prinsipper">Prinsipper</a>
+<ul class="sectlevel3">
+<li><a href="#_dataforvaltning">Dataforvaltning</a>
+<ul class="sectlevel4">
+<li><a href="#_anbefalinger_til_etterlevelse">Anbefalinger til etterlevelse:</a></li>
+</ul>
+</li>
+<li><a href="#_datadeling_og_sammenstilling">Datadeling og -sammenstilling</a>
+<ul class="sectlevel4">
+<li><a href="#_anbefalinger_til_etterlevelse_2">Anbefalinger til etterlevelse:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_del_3_prosesser">Del 3: Prosesser</a>
+<ul class="sectlevel2">
+<li><a href="#_utviklingsfaser_for_nasjonale_grunndata">Utviklingsfaser for nasjonale grunndata</a>
+<ul class="sectlevel3">
+<li><a href="#_fase_1_behov">Fase 1: Behov</a></li>
+<li><a href="#_fase_2_vurder_effekt_avgrens_og_planlegg">Fase 2: Vurder effekt, avgrens og planlegg</a></li>
+<li><a href="#_fase_3_beslutt_rammer">Fase 3: Beslutt rammer</a></li>
+<li><a href="#_fase_4_løpende_forvaltning_og_drift">Fase 4: Løpende forvaltning og drift</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
-<div class="imageblock">
-<div class="content">
-<a class="image" href="https://digdir.no/"><img src="images/Digdir.png" alt="Digdir" width="50%"></a>
-</div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tips"></i>
-</td>
-<td class="content">
-Dette dokumentet kan også lastes ned <a href="files/hvd-dcat-ap-no.pdf">som PDF</a>.
-</td>
-</tr>
-</table>
-</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -470,15 +650,7 @@ Dette dokumentet kan også lastes ned <a href="files/hvd-dcat-ap-no.pdf">som PDF
 <i class="fa icon-note" title="Merk"></i>
 </td>
 <td class="content">
-<div class="paragraph">
-<p><strong>Om dokumentet</strong></p>
-</div>
-<div class="paragraph">
-<p><strong>Dato:</strong> 15. oktober 2025
-<strong>Versjon:</strong> 1.0<br>
-<strong>Dokumenteier:</strong> Arbeidsgruppen for nasjonale grunndata (Digdir)<br>
-<strong>Hensikt:</strong> Dette dokumentet skal beskrive rammeverk for Nasjonale grunndata, det vil si hvilke rutiner, prosesser, roller og aktører som må på plass for at Nasjonale grunndata skal forvaltes på en helhetlig måte på tvers av norsk offentlig sektor.</p>
-</div>
+Dette dokumentet beskriver rammeverk for Nasjonale grunndata, det vil si hvilke rutiner, prosesser, roller og aktører som må på plass for at Nasjonale grunndata skal forvaltes på en helhetlig måte på tvers av norsk offentlig sektor.
 </td>
 </tr>
 </table>
@@ -974,7 +1146,7 @@ Det er imidlertid elementer i alle utfordringene som peker mot behov for å etab
 <div id="footer">
 <div id="footer-text">
 Versjon 1.0<br>
-Sist oppdatert 2025-10-15 13:37:36 UTC
+Sist oppdatert 2025-10-15 13:55:08 UTC
 </div>
 </div>
 </body>
