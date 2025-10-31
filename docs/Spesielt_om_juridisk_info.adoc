@@ -1,8 +1,0 @@
-== Spesielt om juridisk informasjon om datasett med høy verdi [[Spesielt_om_juridisk_info]]
-
-
-HVD-forordningen krever høy metadatakvalitet for juridisk informasjon om datasett med høy verdi. Informasjonen bør være i både maskin- og menneskelesbart format, dessuten med en varig lenke. 
-
-Vi anbefaler sterkt at datasettutgiverne bruker en av lisensene fra https://op.europa.eu/en/web/eu-vocabularies/dataset/-/resource?uri=http://publications.europa.eu/resource/dataset/licence[EUs kontrollerte vokabular for lisens &#x29C9;, window="_blank", role="ext-link"], f.eks. CC BY 4.0 ved å bruke den varige lenken `\http://publications.europa.eu/resource/authority/licence/CC_BY_4_0`. Regjeringens https://www.regjeringen.no/no/dokumenter/retningslinjer-ved-tilgjengeliggjoring-av-offentlige-data/id2536870/[retningslinjer ved tilgjengeliggjøring av offentlige data  &#x29C9;, window="_blank", role="ext-link"], under punkt 1 Bruk åpne standardlisenser, anbefaler også å bruke CC BY 4.0. 
-
-For datasettutgivere som mot formodning ikke kan bruke en av lisensene fra ovennevnte EUs kontrollerte vokabular for lisens, se https://semiceu.github.io/uri.semic.eu-generated/DCAT-AP/releases/3.0.0-hvd/#c3[__Legal information__ &#x29C9;, window="_blank", role="ext-link"] i EUs DCAT-AP HVD. 

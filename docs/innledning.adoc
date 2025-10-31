@@ -1,0 +1,35 @@
+== Innledning: Hva er Nasjonale grunndata og hvorfor er det behov for et rammeverk
+Rammeverket for Nasjonale grunndata har sitt utspring i Skate-sak 15/22. Saksforslaget dreide seg opprinnelig om kun én gang-prinsippet. Arbeidet med saken ble innledet med et innsiktsarbeid for å utvide problemforståelsen. Innsiktsarbeidet viste at utfordringsbildet er sammensatt med sterke avhengigheter mellom de enkeltvise utfordringene. Det er å vanskelig å peke på en entydig løsning for hver enkelt utfordring og de må sees i sammenheng. I tillegg er det svært mange interessenter med ulike perspektiver som gjør at fokus på en utfordring kan lede til nye utfordringer for en eller flere aktører.  
+Det er imidlertid elementer i alle utfordringene som peker mot behov for å etablere en felles og helhetlig modell for forvaltning, styring, prioritering og koordinering av viktige data i offentlig sektor. Fraværet av en slik modell fører til manglende rolleavklaringer, ukoordinerte initiativer og utfordringer med å sikre videreutvikling og effektiv bruk av sentrale data.  
+
+=== Kun én gang
+Økt deling av data mellom offentlige aktører har lenge vært et politisk mål. Mye av motivasjonen til økt deling av data i offentlig sektor ligger i prinsippet om kun én gang. Kun én gang innebærer at innbyggere og virksomheter skal oppgi opplysninger til det offentlige kun én gang, til kun én offentlig aktør – og deretter deles og gjenbrukes mellom aktører. Dette forhindrer at flere aktører samler inn og forvalter de samme dataene. 
+
+Iverksetting av kun én gang-prinsippet kan gi store ressursbesparelser og legger grunnlaget for en mer effektiv offentlig forvaltning. Hovedgevinstene ved kun én gang kan oppsummeres i følgende punkter: 
+
+* *Brukeren i sentrum:* istedenfor at innbygger og næringsliv skal fungere som brevdue for offentlig sektor når de mottar tjenester, oppgir de dataene sine én gang til én aktør.
+* *Effektivisering:* i stedenfor at mange etater bruker ressurser på å samle inn og forvalte samme type data, gjøres dette av én etat som da legger til rette for deling med de etatene som har grunnlag for å gjenbruke dataene.  
+* *Bedre datakvalitet:* istedenfor at samme type data forvaltes i ulike lokalversjoner, forvaltes de i én autoritativ kilde som alltid er korrekt og oppdatert. Dette gir bedre og riktigere data. 
+
+Konsumenter av data har i et økende omfang behov for data til å forbedre prosesser, oppgaveløsning og tjenester, og dette behovet kan for den enkelte virksomhet være en større driver enn kun én gang. Behovet for stabil tilgang til data med avklart kvalitet, forutsigbare støtteprosesser og -funksjoner vil likevel være viktig, uavhengig av drivkreftene for behovet. 
+
+=== Nasjonale grunndata
+Siden kun én gang først ble omtalt i Meld. St. 27 (2015–2016) Digital agenda for Norge — IKT for en enklere hverdag og økt produktivitet har data blitt viktigere og betraktes nå som sentral infrastruktur i samfunnet.  
+
+Av alle dataene som eksisterer og brukes i offentlig sektor, er det noen typer data som er særlig viktige på et samfunnsnivå. Disse særlig viktige dataene kaller vi nasjonale grunndata, og visjonen for nasjonale grunndata for Norge er:  
+
+....
+Nasjonale grunndata er opplysninger mange har bruk for og som er særlig viktig for samfunnets funksjoner og tjenester. De skal ha tilstrekkelig kvalitet og være enkelt tilgjengelig.  
+....
+
+Vi har i dag godt forvaltede data i felles offentlige registre; enhetsregisteret, folkeregisteret, kontakt- og reservasjonsregisteret og matrikkelen.  Dataene i disse registrene er særlig viktige fordi de inngår i svært mange prosesser og verdikjeder i offentlig forvaltning (f.eks. tjenesteyting og saksbehandling). Ikke minst kan dataene være viktige i kritiske samfunnsfunksjoner tillagt nødetatene. Det er imidlertid ikke automatikk i at data samlet inn til et formål automatisk er grunndata for samfunnet. En rekke data er svært viktige for en enkelt virksomhet eller en enkelt sektor hvor de brukes til ulike formål, uten at de er viktige på tvers i samfunnet. Antakeligvis vil kun en delmengde av innsamlede data, for eksempel i et register, være Nasjonale grunndata.  
+
+=== Et rammeverk sørger for kvalitet og tilgang på nasjonale grunndata
+For å sikre tilstrekkelig kvalitet og tilgjengelighet for nasjonale grunndata, må det tydeliggjøres hvem som har ansvar for hva, hva som ligger i ansvaret og hvordan aktørene skal samhandle. Et rammeverk må på plass for at vi skal klare å nå visjonen om Nasjonale grunndata for Norge.  
+
+Rammeverket for Nasjonale grunndata bidrar til at data med stor nasjonal nytte forvaltes og utvikles i et langsiktig perspektiv, i tråd med samfunnsbehov og mål. Rammeverket sikrer at de nasjonale grunndataene forvaltes på en helhetlig måte. Tilbydere av data får bedre organisatoriske rammer for prioritering og videreutvikling av dataene, samt at rammeverket kan bidra til avklaring og tydeliggjøring av de juridiske rammene. Konsumenter av data har trygg tilgang til data, og disse har tilstrekkelig kvalitet.  
+
+Rammeverket innebærer forpliktelser for både datatilbydere og -konsumenter, og er avhengig av politisk vilje og oppmerksomhet for å lykkes. 
+
+=== På lag med dagens styring
+Selv om rammeverket introduserer nye roller og prosesser, spiller rammeverket på lag med eksisterende styringsstrukturer i forvaltningen, deriblant sektorprinsippet. Samtidig inneholder rammeverket mekanismer som muliggjør tverrsektoriell forvaltning og bruk av data. Grunnleggende i rammeverket er forståelsen for at dataforvaltningsoppgavene som blir pålagt én aktør vil gi effektiviseringsgevinst hos en annen aktør. I det store bildet kommer en slik fordeling av innsats og gevinst hele samfunnet til gode. 

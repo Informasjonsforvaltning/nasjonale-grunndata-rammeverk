@@ -1,3 +1,0 @@
-= Om denne versjonen [[Om-denne-versjonen]]
-
-Dette er et #utkast# til den kommende v.1.0 av HVD-DCAT-AP-NO, som er #under arbeid# og som #løpende oppdateres# inntil den endelige v.1.0 blir ferdigstilt og publisert (tentativt i løpet av det siste kvartalet av 2024). Dette utkastet bygger på forslaget til v.1.0 (høringsversjonen) som var til høring (med høringsfrist 1. okt. 2024), og tar inn endringer som følger av høringsinnspill, etter hvert som innspillene blir håndtert av en redaksjonsgruppe ved Digdir.

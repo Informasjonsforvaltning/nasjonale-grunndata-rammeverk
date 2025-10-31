@@ -1,0 +1,87 @@
+== Del 2: Kriterier og prinsipper for nasjonale grunndata
+Dette kapitlet fastsetter, på overordnet nivå, kriteriene og prinsippene som er førende for de nasjonale grunndataene, deres tilbydere og konsumenter.  
+
+Dette er en viktig del av rammeverk som har som formål å sikre at visjonen om tilstrekkelig kvalitet og enkel tilgang på nasjonale grunndata oppnås. 
+
+=== Kriterier for nasjonale grunndata
+Kriterier for nasjonale grunndata har til hensikt å presisere hva Nasjonale grunndata er, hva som kjennetegner dem og hvor skillet mellom grunndata og «andre» data går. Dette er for å sikre at rammeverket konsentrerer seg om de viktigste dataene. Kriteriene illustrerer både de iboende egenskapene som kjennetegner Nasjonale grunndata samt forventingene som stilles til disse dataene. 
+
+Kriteriene er et sentralt verktøy for blant andre grunndatakoordinatoren i å sørge for at de «riktige» dataene tas inn i grunndataoversikten. Kriteriene brukes i en første vurdering for å identifisere kandidater til nasjonale grunndata.  
+
+Grunndataforvalter kan bruke kriteriene til å identifisere hvilke data som kan være nasjonale grunndata og utvikle/utbedre grunndata. 
+
+==== Kriterier
+. Andre aktører er avhengige av dataene for å løse sitt samfunnsoppdrag 
+. Gir verdi på tvers av sektorer 
+. Dataene dekker et behov for mange konsumenter 
+. Dataene er en autoritativ kilde som innebærer at de svarer ut et av fire krav nedenfor: 
+
+** Eksisterer regelverk som pålegger aktører å benytte disse dataene 
+** Er eneste eksisterende kilde 
+** Data som brukere anser at bør være autoritativ kilde 
+** Finnes flere kilder, men disse dataene har bedre kvalitet/større brukergruppe 
+
+=== Prinsipper
+Rammeverket for Nasjonale grunndata følger de overordnede arkitekturprinsipper for digitalisering av offentlig sektor i henhold til Digitaliseringsrundskrivets punkt 1.11; _Følg krav om arkitektur og standarder_. Dette innebærer at man bruker samme form, og beskriver hovedprinsipper med konkrete anbefaleringer til etterlevelse av prinsippene. De overordnede arkitekturprinsippene har formen navn, forklaring, begrunnelse, anbefalinger, veiledning og ressurser. 
+ 
+Prinsippene for Nasjonale grunndata supplerer de overordnede arkitekturprinsippene og kobles særlig til _prinsipp fire om deling og gjenbruk av data_, se oversikt over de overordnede arkitekturprinsippene i tabellen nedenfor. 
+
+.Overordnede arkitekturprinsipper
+[cols="1,3,6", options="header"]
+|===
+|Nr. |Prinsipp |Kobling til nasjonale grunndata
+
+|1
+|Ta utgangspunkt i brukernes behov
+|Hvilke data som får status som nasjonale grunndata skal være basert på brukerbehov. Nasjonale grunndata er data som er særlig viktig for samfunnet og mange har behov for.
+
+|2
+|Ta arkitekturbeslutninger på rett nivå
+|For nasjonale grunndata er det spesifisert forskjellige roller som har forskjellig ansvar. Grunndataforvalter og nasjonal grunndatakoordinator
+
+|3
+|Bidra til digitaliseringsvennlige regelverk
+|Arbeidet med nasjonale grunndata vil bidra til å identifisere juridiske barrierer for samhandling og digitalisering, og bidra til å kunne igangsette lov- og forskriftsendringer
+
+|4
+|Del og gjenbruk data
+|Nasjonale grunndata vil bidra til at det blir enklere å dele og gjenbruke data
+
+|5
+|Del og gjenbruk løsninger
+|Nasjonale grunndata vil blant annet bidra til økt standardisering, gjenbruk av informasjonsmodeller, samarbeid rundt begrepsarbeid osv.
+
+|6
+|Lag digitale løsninger som støtter samhandling
+|Rammeverket for nasjonale grunndata vil bidra til juridisk, organisatorisk, semantisk og teknisk samhandlingsevne. Dette innebærer blant annet standardisering, avtaler og felles begrepsapparat.
+
+|7
+|Sørg for tillit til oppgaveløsningen
+|Rammeverk for nasjonale grunndata kan bidra til etterlevelse av regelverket og ivareta krav til rettssikkerhet, effektivitet, informasjonssikkerhet og personvern.
+|===
+
+
+==== Dataforvaltning
+Nasjonale grunndata skal ha en kvalitet som sikrer at de er pålitelige, relevante og egnet til å dekke brukernes behov. Dataenes bruksverdi, integritet og forvaltning skal ivaretas, slik at de reflekterer faktiske forhold.  
+
+===== Anbefalinger til etterlevelse: 
+Sørg for at Nasjonale grunndata følger fastsatte krav og prosesser i rammeverket for Nasjonale grunndata: 
+
+* Nasjonale grunndata skal ha et avklart forvaltningsansvar slik at ansvar for datakvalitet er plassert 
+** Dette gjelder utforming, etablering og forvaltning av nasjonale grunndata, både med hensyn til forutsetninger, ansvarsforhold, risikofaktorer og ressursbruk.  
+
+* Nasjonale grunndata skal ha tilstrekkelig kvalitet til å dekke et nasjonalt behov (konsumenters behov på tvers av sektorer) 
+
+** Det må være tydelig og forståelig hvilke krav som stilles til kilden for opplysninger, og hvem som har ansvar for å gi hvilke bidrag til sikring av kvalitet og troverdighet. 
+** Etablere tilbakemeldingssløyfer og rutiner for hvordan man opprettholder kvalitet på data. 
+
+==== Datadeling og -sammenstilling
+Nasjonale grunndata deles med de som har rettighet til det. Dataenes livssyklus, anvendbarhet og «kombinerbarhet» må sikres. Dataene skal kunne benyttes i ulik brukskontekst, saksbehandling, livshendelser eller situasjonsforståelse. 
+
+===== Anbefalinger til etterlevelse: 
+
+Sørg for at Nasjonale grunndata er innrettet for flerbruk og kan anvendes effektivt og enkelt: 
+
+* Nasjonale grunndata skal forvaltes og tilgjengeliggjøres slik at konsumenter ikke har behov for å samle inn dataene inn på nytt  
+* Nasjonale grunndata skal baseres på FAIR-prinsippene 
+* Nasjonale grunndata skal kunne kombineres med andre data. Det er gjennom sammenstilling dataene gir høy verdi på tvers og skaper stor samfunnsnytte 
