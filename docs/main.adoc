@@ -11,7 +11,8 @@ Arbeidsgruppen for nasjonale grunndata i Digdir
 :sectnums!:
 :icons: font
 :source-highlighter: rouge
-:sectlinks:
+// :sectlinks:
+:sectanchors:
 :table-stripes: even
 :title-logo-image: images/Digdir.png[pdfwidth=30vw]
 :title-logo-alt: Digitaliseringsdirektoratet
@@ -33,3 +34,6 @@ include::del1.adoc[]
 include::del2.adoc[]
 
 include::del3.adoc[]
+
+// Analytics
+include::shared/analytics.adoc[]
