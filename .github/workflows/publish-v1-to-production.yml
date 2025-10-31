@@ -1,5 +1,6 @@
 name: build adocs and publish v1 to production
-
+permissions:
+  contents: read
 on:
   push:
     branches:
@@ -32,28 +33,17 @@ jobs:
         with:
           program: "asciidoctor -D docs -o index.html -a lang=nb docs/main.adoc"
 
-      - name: Build pdf
-        id: adocbuild_pdf
-        uses: tonynv/asciidoctor-action@master
-        with:
-            program: "asciidoctor-pdf -D docs -o files/hvd-dcat-ap-no.pdf -a lang=nb docs/main.adoc"
-        continue-on-error: true
-
       - name: Upload files to static-rdf-server
         uses: Informasjonsforvaltning/upload-files-to-static-rdf-server-action@v3.2.0
         id: upload-files
         with:
           ontology-type: "specification"
-          ontology: "hvd-dcat-ap-no"
+          ontology: "nasjonale-grunndata-rammeverk"
           host: "https://data.norge.no"
           api-key: ${{ secrets.STATIC_RDF_SERVER_API_KEY }}
           files: |
             docs/index.html text/html nb
-            docs/files/hvd-dcat-ap-no.pdf application/pdf nb files/hvd-dcat-ap-no.pdf
             docs/images/Digdir.png image/png nb images/Digdir.png
-            docs/images/datasett-distribusjon-datatjeneste.png image/png nb images/datasett-distribusjon-datatjeneste.png
-            docs/images/HVD-DCAT-AP-NO-forenklet-fremstilling.png image/png nb images/HVD-DCAT-AP-NO-forenklet-fremstilling.png
-            docs/images/Klassen-Datasett.png image/png nb images/Klassen-Datasett.png
-            docs/images/Klassen-Datasettserie.png image/png nb images/Klassen-Datasettserie.png
-            docs/images/Klassen-Datatjeneste.png image/png nb images/Klassen-Datatjeneste.png
-            docs/images/Klassen-Distribusjon.png image/png nb images/Klassen-Distribusjon.png
+            docs/images/NG_organisering.png image/png nb images/NG_organisering.png
+            docs/images/NG_roller.png image/png nb images/NG_roller.png
+            docs/images/NG_utviklingfaser.png image/png nb images/NG_utviklingfaser.png
