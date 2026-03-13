@@ -1,2 +1,6 @@
 
 == Vedlegg
+Vedlegg som er relevante for å forstå og bruke rammeverket. Merk at disse er under arbeid og vil bli oppdatert fortløpende.
+
+=== link:files/veileder-ng-nytte-kost.pdf[Veileder i nytte-kostnadsvurderinger av Nasjonale grunndata]
+Veilederen skal benyttes i fase 2 (vurdere effekt, avgrens og planlegg) og inngår som underlag til fase 3 (beslutt rammer). Metoden er basert på prinsippene fra samfunnsøkonomiske nytte-kostnadsanalyser, men er vesentlig forenklet. Veilederen er utarbeidet av Menon Economics på oppdrag fra Digdir. 
