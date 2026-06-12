@@ -1,6 +1,8 @@
 name: build adocs and publish v1 to production
+
 permissions:
   contents: read
+
 on:
   push:
     branches:
@@ -10,40 +12,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  adoc_build:
-    runs-on: ubuntu-latest
-    name: asciidoctor build
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: v1
-          submodules: true
-          fetch-depth: 0
-
-      - name: Update submodules to latest main
-        run: |
-          git submodule foreach --recursive git fetch origin
-          git submodule foreach --recursive git checkout origin/main
-
-      - name: Build html
-        id: adocbuild_html
-        uses: tonynv/asciidoctor-action@master
-        with:
-          program: "asciidoctor -D docs -o index.html -a lang=nb docs/main.adoc"
-
-      - name: Upload files to static-rdf-server
-        uses: Informasjonsforvaltning/upload-files-to-static-rdf-server-action@v3.2.0
-        id: upload-files
-        with:
-          ontology-type: "specification"
-          ontology: "nasjonale-grunndata-rammeverk"
-          host: "https://data.norge.no"
-          api-key: ${{ secrets.STATIC_RDF_SERVER_API_KEY }}
-          files: |
-            docs/index.html text/html nb
-            docs/images/Digdir.png image/png nb images/Digdir.png
-            docs/images/NG_organisering.png image/png nb images/NG_organisering.png
-            docs/images/NG_roller.png image/png nb images/NG_roller.png
-            docs/images/NG_utviklingsfaser.png image/png nb images/NG_utviklingsfaser.png
+  upload-files-to-production:
+    name: Upload specification to static-rdf-server
+    uses: Informasjonsforvaltning/workflows/.github/workflows/specification-upload-files.yaml@main
+    with:
+      ref: v1
+      program_html: |
+        asciidoctor -D docs -o index.html -a lang=nb docs/main.adoc
+      files: |
+        docs/index.html text/html nb
+        docs/images/Digdir.png image/png nb images/Digdir.png
+        docs/images/NG_organisering.png image/png nb images/NG_organisering.png
+        docs/images/NG_roller.png image/png nb images/NG_roller.png
+        docs/images/NG_utviklingsfaser.png image/png nb images/NG_utviklingsfaser.png
+      host: https://data.norge.no
+      ontology: nasjonale-grunndata-rammeverk
+      ontology-type: specification
+    secrets:
+      STATIC_RDF_SERVER_API_KEY: ${{ secrets.STATIC_RDF_SERVER_API_KEY }}
